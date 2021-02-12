@@ -40,10 +40,6 @@
   font-size: 2rem;
 }
 
-.formLayout {
-  display: none;
-}
-
 .buttons {
   display: flex;
   flex-direction: column;
@@ -52,6 +48,7 @@
 .banner {
   width: 100%;
   height: 55vh;
+  background-color: var(--twitterBlue);
   background: url('https://abs.twimg.com/sticky/illustrations/lohp_en_1302x955.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -94,14 +91,6 @@
     margin: 13vh auto 0 0;
   }
 
-  /* first appearance */
-  .formLayout {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-
   .buttons {
     width: 75%;
     flex-direction: column;
@@ -137,9 +126,5 @@
 @media only screen and (min-width: 1600px) {
   .welcome {
     height: 480px;
-  }
-
-  .formLayout {
-    width: 550px;
   }
 }

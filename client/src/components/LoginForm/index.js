@@ -1,15 +1,16 @@
 import { useState } from 'react';
+import styles from './index.module.css';
 import Input from '../Input';
 import Button from '../Button';
 
-export default function LoginForm({ layout }) {
+export default function LoginForm({ onPage }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {};
 
   return (
-    <form className={layout} onSubmit={handleSubmit}>
+    <form className={styles[onPage]} onSubmit={handleSubmit}>
       <Input
         label='Username'
         name='username'
@@ -24,7 +25,7 @@ export default function LoginForm({ layout }) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button text='Log in' design='outlined' type='submit' />
+      <Button text='Log in' design={onPage === 'public' ? 'outlined' : 'filled'} type='submit' />
     </form>
   );
 }
