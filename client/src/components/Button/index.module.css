@@ -1,13 +1,12 @@
 .btn {
-  flex: 1;
-  min-width: 110px;
-  margin: 0.6rem;
-  padding: 0.9rem 0;
+  width: 100%;
+  line-height: 42px;
+  margin: 5px;
   background-color: transparent;
   border: none;
   border-radius: 2rem;
   text-align: center;
-  font-size: 1.05rem;
+  font-size: 1em;
   font-weight: 600;
   cursor: pointer;
   transition: box-shadow 0.2s;

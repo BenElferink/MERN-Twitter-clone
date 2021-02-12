@@ -14,30 +14,12 @@
 .welcome {
   max-width: 650px;
   width: 100%;
-  height: 500px;
+  height: 480px;
   margin: 2vh auto;
-  padding: 2rem;
+  padding: 2em 1.5em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.welcome > svg {
-  width: 50px;
-  height: 50px;
-  fill: var(--twitterBlue);
-}
-
-.welcome > h1,
-.welcome > h2 {
-  font-weight: 700;
-  font-family: Montserrat;
-}
-.welcome > h1 {
-  font-size: 4rem;
-}
-.welcome > h2 {
-  font-size: 2rem;
 }
 
 .buttons {
@@ -80,27 +62,23 @@
     flex-direction: row-reverse;
     flex-wrap: wrap;
   }
-
   .auth {
     width: 60%;
     height: 96vh;
-    padding: 0.5rem;
+    padding: 0.5em 1em;
   }
-
-  .welcome {
-    margin: 13vh auto 0 0;
-  }
-
-  .buttons {
-    width: 75%;
-    flex-direction: column;
-  }
-
   .banner {
     width: 40%;
     height: 96vh;
   }
 
+  .welcome {
+    margin: 13vh auto 0 0;
+  }
+  .buttons {
+    width: 75%;
+    flex-direction: column;
+  }
   .banner > svg {
     width: 300px;
     height: 300px;
@@ -114,17 +92,7 @@
   .auth {
     width: 45%;
   }
-
   .banner {
     width: 55%;
-  }
-}
-
-/*
-  ! Huge Devices !
-*/
-@media only screen and (min-width: 1600px) {
-  .welcome {
-    height: 480px;
   }
 }

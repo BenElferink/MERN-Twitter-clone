@@ -7,7 +7,9 @@ export default function LoginForm({ onPage }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <form className={styles[onPage]} onSubmit={handleSubmit}>

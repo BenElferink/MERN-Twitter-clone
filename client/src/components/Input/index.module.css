@@ -1,6 +1,6 @@
 .inpGroup {
   width: 100%;
-  margin: 0 5px;
+  margin: 5px 2px;
   border: 1px solid #808080;
   border-radius: 5px;
   position: relative;
@@ -24,7 +24,7 @@
   top: 4px;
   left: 3px;
   color: #818181;
-  font-size: 0.75rem;
+  font-size: 0.8em;
   cursor: text;
   transition: all 0.2s;
 }
@@ -32,10 +32,10 @@
 .inpGroup > input:focus ~ label {
   top: 4px !important;
   color: var(--twitterBlue) !important;
-  font-size: 0.75rem !important;
+  font-size: 0.8em !important;
 }
 
 .inpGroup > input:placeholder-shown + label {
-  top: 14px;
-  font-size: 1rem;
+  top: 12px;
+  font-size: 1.1em;
 }

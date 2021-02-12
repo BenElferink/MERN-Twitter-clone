@@ -1,12 +1,13 @@
 import styles from './index.module.css';
 
-export default function Button({ design, text, onClick, type }) {
+export default function Button({ design, text, onClick, type, disabled }) {
   return (
-    <div
+    <button
       className={styles.btn + ' ' + styles[design]}
       onClick={onClick ? onClick : () => null}
+      disabled={disabled}
       type={type ? type : ''}>
       {text}
-    </div>
+    </button>
   );
 }
