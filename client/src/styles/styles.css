@@ -2,6 +2,11 @@
   --twitterBlue: #03a9f4;
 }
 
+@font-face {
+  font-family: Montserrat;
+  src: url('../fonts/Montserrat-Black.ttf');
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

@@ -12,9 +12,9 @@
 }
 
 .welcome {
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
-  height: 420px;
+  height: 500px;
   margin: 2vh auto;
   padding: 2rem;
   display: flex;
@@ -30,13 +30,14 @@
 
 .welcome > h1,
 .welcome > h2 {
-  font-weight: 900;
+  font-weight: 700;
+  font-family: Montserrat;
 }
 .welcome > h1 {
-  font-size: 2.7rem;
+  font-size: 4rem;
 }
 .welcome > h2 {
-  font-size: 1.7rem;
+  font-size: 2rem;
 }
 
 .formLayout {
@@ -60,8 +61,8 @@
 }
 
 .banner > svg {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   fill: #fff;
 }
 
@@ -69,17 +70,6 @@
   Small Devices, Tablets
 */
 @media only screen and (min-width: 768px) {
-  .welcome {
-    margin: 4vh auto;
-  }
-
-  .welcome > h1 {
-    font-size: 3.5rem;
-  }
-  .welcome > h2 {
-    font-size: 2rem;
-  }
-
   .buttons {
     flex-direction: row;
   }
@@ -97,7 +87,7 @@
   .auth {
     width: 60%;
     height: 96vh;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
   }
 
   .welcome {
@@ -149,14 +139,7 @@
     height: 480px;
   }
 
-  .welcome > h1 {
-    font-size: 4rem;
-  }
-  .welcome > h2 {
-    font-size: 2.5rem;
-  }
-
   .formLayout {
-    width: 600px;
+    width: 550px;
   }
 }
