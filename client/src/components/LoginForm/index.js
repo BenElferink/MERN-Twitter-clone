@@ -28,6 +28,12 @@ export default function LoginForm({ onPage }) {
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button text='Log in' design={onPage === 'public' ? 'outlined' : 'filled'} type='submit' />
+
+      {onPage === 'login' && (
+        <button className={styles.register} onClick={() => null}>
+          Sign up for Twitter
+        </button>
+      )}
     </form>
   );
 }

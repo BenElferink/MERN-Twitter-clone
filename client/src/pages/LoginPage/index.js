@@ -8,9 +8,6 @@ export default function LoginPage() {
       <TwitterIcon />
       <h2>Log in to Twitter</h2>
       <LoginForm onPage='login' />
-      <button className={styles.register} onClick={() => null}>
-        Sign up for Twitter
-      </button>
     </div>
   );
 }

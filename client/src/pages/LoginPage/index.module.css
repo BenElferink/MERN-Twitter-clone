@@ -7,16 +7,3 @@
 .page > h2 {
   margin-top: 42px;
 }
-
-.register {
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  color: var(--twitterBlue);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-.register:hover,
-.register:active {
-  text-decoration: underline;
-}
