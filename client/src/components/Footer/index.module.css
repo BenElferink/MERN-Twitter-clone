@@ -5,6 +5,7 @@
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
+  text-align: center;
   color: #818181;
   font-size: 0.9rem;
 }
