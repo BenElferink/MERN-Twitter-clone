@@ -9,14 +9,14 @@
 
 .auth {
   width: 100%;
-  padding: 2rem;
 }
 
 .welcome {
-  max-width: 500px;
-  min-height: 350px;
-  max-height: 400px;
+  max-width: 600px;
+  width: 100%;
+  height: 420px;
   margin: 2vh auto;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,7 +50,7 @@
 
 .banner {
   width: 100%;
-  height: 50vh;
+  height: 55vh;
   background: url('https://abs.twimg.com/sticky/illustrations/lohp_en_1302x955.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -69,17 +69,15 @@
   Small Devices, Tablets
 */
 @media only screen and (min-width: 768px) {
-  .auth {
-    width: 70%;
-  }
-
   .welcome {
-    height: 100%;
-    margin: 4vh 0;
+    margin: 4vh auto;
   }
 
   .welcome > h1 {
-    font-size: 3.7rem;
+    font-size: 3.5rem;
+  }
+  .welcome > h2 {
+    font-size: 2rem;
   }
 
   .buttons {
@@ -98,12 +96,12 @@
 
   .auth {
     width: 60%;
-    height: 95vh;
-    padding: 0.5rem 1.5rem 0 1.5rem;
+    height: 96vh;
+    padding: 0.5rem 1rem;
   }
 
   .welcome {
-    margin-top: 12vh;
+    margin: 13vh auto 0 0;
   }
 
   /* first appearance */
@@ -121,7 +119,7 @@
 
   .banner {
     width: 40%;
-    height: 95vh;
+    height: 96vh;
   }
 
   .banner > svg {
@@ -138,10 +136,6 @@
     width: 45%;
   }
 
-  .buttons {
-    width: 65%;
-  }
-
   .banner {
     width: 55%;
   }
@@ -151,10 +145,18 @@
   ! Huge Devices !
 */
 @media only screen and (min-width: 1600px) {
-  .auth {
-    padding-right: 12vw;
-  }
   .welcome {
-    margin-top: 15vh;
+    height: 480px;
+  }
+
+  .welcome > h1 {
+    font-size: 4rem;
+  }
+  .welcome > h2 {
+    font-size: 2.5rem;
+  }
+
+  .formLayout {
+    width: 600px;
   }
 }
