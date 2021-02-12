@@ -1,8 +1,10 @@
 .component {
   width: 100vw;
-  height: 70px;
+  padding: 15px 10px;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
+  color: #818181;
+  font-size: 0.9rem;
 }
