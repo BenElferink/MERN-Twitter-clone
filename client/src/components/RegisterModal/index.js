@@ -30,7 +30,7 @@ export default function RegisterModal() {
           username,
           email,
           password,
-          imageBase64: profilePic,
+          imageBase64: profilePic.base64,
         });
         console.log(response);
         alert('success');
