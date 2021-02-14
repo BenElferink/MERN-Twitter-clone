@@ -5,7 +5,7 @@ import Loader from 'react-loader-spinner';
 export default function Loading() {
   return (
     <div className={styles.component}>
-      <Loader type='BallTriangle' color='#03A9F4' height={111} width={111} />
+      <Loader type='Oval' color='#03A9F4' width={50} height={50} />
     </div>
   );
 }

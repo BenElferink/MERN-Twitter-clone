@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllUsers, createNewUser } from '../controllers/controllers.js'; // import request & response function
+import { getAllUsers, createNewUser } from '../controllers/userControllers.js'; // import request & response function
 
 // initialize router
 const router = express.Router();
@@ -11,12 +11,7 @@ const router = express.Router();
   3rd param = request & response function (controller)
 */
 
-// current method: GET
-// current path: http://localhost:8080/api/v1/users
-router.get('/', (request, response, next) => next(), getAllUsers);
-
-// current method: POST
-// current path: http://localhost:8080/api/v1/users/new
 router.post('/new', (request, response, next) => next(), createNewUser);
+router.get('/', (request, response, next) => next(), getAllUsers);
 
 export default router;

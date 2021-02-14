@@ -1,23 +1,50 @@
 import { Fragment, useState } from 'react';
 import styles from './index.module.css';
 import FileBase64 from 'react-file-base64';
-import Modal from '../../layout/Modal';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
+import axios from '../../api';
+import Modal from '../Modal';
+import Loading from '../Loading';
+import Button from '../Button';
+import Input from '../Input';
 import TwitterIcon from '../../icons/Twitter';
 import BackIcon from '../../icons/Back';
-import AvatarIcon from '../../icons/Avatar';
+import CameraIcon from '../../icons/Camera';
 
 export default function RegisterModal() {
   const [phase, setPhase] = useState(1);
+  const [submitting, setSubmitting] = useState(false);
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [profilePic, setProfilePic] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (phase === 3) {
+      setSubmitting(true);
+
+      try {
+        const response = await axios.post('/users/new', {
+          name,
+          username,
+          email,
+          password,
+          imageBase64: profilePic,
+        });
+        console.log(response);
+        alert('success');
+        setSubmitting(false);
+      } catch (error) {
+        console.error(error);
+        if (error.response.status === 400) {
+          alert(error.response.data.message);
+        } else {
+          alert('❌ An unnexpected error occurred');
+        }
+        setSubmitting(false);
+      }
+    }
   };
 
   const None = () => <div style={{ width: '70px' }} />;
@@ -28,14 +55,12 @@ export default function RegisterModal() {
         {/* top nav */}
         <div className={styles.nav}>
           {phase !== 1 ? (
-            <button className={styles.back} onClick={() => setPhase(phase - 1)}>
-              <BackIcon />
-            </button>
+            <BackIcon className={styles.back} onClick={() => setPhase(phase - 1)} />
           ) : (
             <None />
           )}
           <TwitterIcon />
-          {phase === 2 && profilePic === '' ? (
+          {phase === 2 && !profilePic ? (
             <button className={styles.skip} onClick={() => setPhase(phase + 1)}>
               Skip for now
             </button>
@@ -52,7 +77,7 @@ export default function RegisterModal() {
         </div>
 
         {/* phase title */}
-        {phase === 1 || 3 ? (
+        {phase === 1 || phase === 3 ? (
           <h2>Create your account</h2>
         ) : phase === 2 ? (
           <h2>Pick a profile picture</h2>
@@ -60,10 +85,10 @@ export default function RegisterModal() {
 
         {/* phase contents */}
         {phase === 2 || phase === 3 ? (
-          <button className={styles.picSelect}>
+          <div className={styles.picSelect}>
             <FileBase64 multiple={false} onDone={(file) => setProfilePic(file)} />
-            {profilePic === '' ? <AvatarIcon /> : <img src={profilePic.base64} alt='' />}
-          </button>
+            {profilePic ? <img src={profilePic.base64} alt='' /> : <CameraIcon />}
+          </div>
         ) : null}
         {phase === 1 || phase === 3 ? (
           <Input
@@ -71,7 +96,10 @@ export default function RegisterModal() {
             name='name'
             type='text'
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              setUsername(e.target.value.replaceAll(' ', ''));
+            }}
           />
         ) : null}
         {phase === 3 && (
@@ -79,7 +107,7 @@ export default function RegisterModal() {
             label='Username'
             name='username'
             type='text'
-            value={username || name.replaceAll(' ', '')}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         )}
@@ -101,7 +129,11 @@ export default function RegisterModal() {
             />
           </Fragment>
         ) : null}
-        {phase === 3 && <Button text='Sign up' design='filled' type='submit' />}
+        {phase === 3 && submitting ? (
+          <Loading type='Oval' color='#03A9F4' width={50} height={50} />
+        ) : phase === 3 && !submitting ? (
+          <Button text='Sign up' design='filled' type='submit' />
+        ) : null}
       </form>
 
       {/* bottom disclaimer */}

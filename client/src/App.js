@@ -4,7 +4,7 @@ import './styles/styles.css';
 import Loading from './components/Loading';
 const PublicPage = lazy(() => import('./pages/PublicPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
-const RegisterModal = lazy(() => import('./pages/RegisterModal'));
+const RegisterModal = lazy(() => import('./components/RegisterModal'));
 
 export default function App() {
   const [isRegister, setIsRegister] = useState(false);

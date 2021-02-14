@@ -8,6 +8,7 @@
 .nav svg {
   width: 25px;
   height: 25px;
+  margin: 5px 0;
   fill: var(--twitterBlue);
 }
 .nav > button {
@@ -18,22 +19,24 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .back {
-  width: 30px !important;
   height: 30px !important;
-  margin: 5px 20px;
+  width: 70px !important;
+  margin: 0 !important;
+  padding: 2px;
   background-color: transparent;
-  border: none;
   border-radius: 100%;
+  cursor: pointer;
 }
 .back:hover,
 .back:active {
-  background-color: rgba(0, 0, 150, 0.1);
+  transform: scale(1.1);
 }
 .skip {
   white-space: nowrap;
   justify-content: flex-end;
-  margin: 5px;
+  width: 70px !important;
   background-color: transparent;
   border: none;
   color: var(--twitterBlue);
@@ -51,35 +54,35 @@
   width: 200px;
   height: 200px;
   margin: 0 calc(50% - 100px);
-  background-color: #bfbfbf;
-  border: none;
+  background: url('http://localhost:8080/images/user.jpg');
+  background-repeat: no-repeat;
+  background-size: 123%;
+  background-position: center;
+  border: 1px solid var(--twitterBlue);
   border-radius: 100%;
+  display: grid;
+  place-items: center;
   position: relative;
 }
-.picSelect > input[type='file'] {
-  width: 200px;
-  height: 200px;
+.picSelect > img {
+  width: 100%;
+  height: 100%;
   border-radius: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  cursor: pointer;
 }
 .picSelect > svg {
-  width: 150px;
-  height: 150px;
-  margin: 50px auto 0 auto;
-  fill: #808080;
+  width: 30px;
+  height: 30px;
+  fill: #333;
 }
-.picSelect > img {
-  width: 200px;
-  height: 200px;
-  border: 1px solid #000;
-  border-radius: 100%;
+.picSelect > input[type='file'] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .disclaimer {

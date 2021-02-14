@@ -2,13 +2,25 @@ import mongoose from 'mongoose';
 
 const instance = new mongoose.Schema(
   {
-    _id: mongoose.Schema.Types.ObjectId, // _id is set by default, (you can remove this line)
-
-    /*
-      name = Object key
-      String = Type
-    */
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    profilePicture: String,
   },
   {
     timestamps: true,
