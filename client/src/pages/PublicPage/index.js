@@ -5,7 +5,7 @@ import LoginForm from '../../components/LoginForm';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 
-export default function PublicPage() {
+export default function PublicPage({ clickRegister }) {
   const history = useHistory();
 
   return (
@@ -18,7 +18,7 @@ export default function PublicPage() {
           <h1>Happening now</h1>
           <h2>Join Twitter today.</h2>
           <div className={styles.buttons}>
-            <Button text='Sign up' design='filled' onClick={() => null} />
+            <Button text='Sign up' design='filled' onClick={clickRegister} />
             <Button text='Log in' design='outlined' onClick={() => history.push('/login')} />
           </div>
         </div>

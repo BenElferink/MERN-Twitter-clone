@@ -3,7 +3,7 @@ import styles from './index.module.css';
 import Input from '../Input';
 import Button from '../Button';
 
-export default function LoginForm({ onPage }) {
+export default function LoginForm({ onPage, clickRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,7 +30,7 @@ export default function LoginForm({ onPage }) {
       <Button text='Log in' design={onPage === 'public' ? 'outlined' : 'filled'} type='submit' />
 
       {onPage === 'login' && (
-        <button className={styles.register} onClick={() => null}>
+        <button className={styles.register} onClick={clickRegister}>
           Sign up for Twitter
         </button>
       )}

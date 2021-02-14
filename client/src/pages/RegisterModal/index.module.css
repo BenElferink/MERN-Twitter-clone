@@ -1,0 +1,88 @@
+/* top nav */
+.nav {
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav svg {
+  width: 25px;
+  height: 25px;
+  fill: var(--twitterBlue);
+}
+.nav > button {
+  width: 60px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.back {
+  width: 30px !important;
+  height: 30px !important;
+  margin: 5px 20px;
+  background-color: transparent;
+  border: none;
+  border-radius: 100%;
+}
+.back:hover,
+.back:active {
+  background-color: rgba(0, 0, 150, 0.1);
+}
+.skip {
+  white-space: nowrap;
+  justify-content: flex-end;
+  margin: 5px;
+  background-color: transparent;
+  border: none;
+  color: var(--twitterBlue);
+  font-size: 1em;
+  font-weight: 600;
+}
+
+/* modal content */
+.main > h2 {
+  margin: 20px 0;
+  font-weight: 100 !important;
+}
+
+.picSelect {
+  width: 200px;
+  height: 200px;
+  margin: 0 calc(50% - 100px);
+  background-color: #bfbfbf;
+  border: none;
+  border-radius: 100%;
+  position: relative;
+}
+.picSelect > input[type='file'] {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.picSelect > svg {
+  width: 150px;
+  height: 150px;
+  margin: 50px auto 0 auto;
+  fill: #808080;
+}
+.picSelect > img {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.disclaimer {
+  color: #818181;
+  font-size: 0.8em;
+}

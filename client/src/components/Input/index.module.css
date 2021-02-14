@@ -12,7 +12,7 @@
 }
 
 .inpGroup > input {
-  width: 100%;
+  width: 99%;
   margin: 22px 3px 3px 3px;
   background-color: transparent;
   border: none;
@@ -29,13 +29,27 @@
   transition: all 0.2s;
 }
 
+.inpGroup > svg {
+  width: 1.4em;
+  height: 1.4em;
+  position: absolute;
+  top: 55%;
+  right: 1em;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 .inpGroup > input:focus ~ label {
   top: 4px !important;
   color: var(--twitterBlue) !important;
   font-size: 0.8em !important;
 }
 
-.inpGroup > input:placeholder-shown + label {
+.inpGroup > input:placeholder-shown ~ label {
   top: 12px;
   font-size: 1.1em;
+}
+
+.inpGroup > input:placeholder-shown ~ svg {
+  display: none;
 }
