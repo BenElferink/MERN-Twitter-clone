@@ -68,7 +68,7 @@ export async function getAllUsers(request, response, next) {
     // fetch all users
     const allUsers = await User.find().select('username profilePicture');
 
-    response.status(200).json({ message: 'public users fetched', users: allUsers });
+    response.status(200).json({ message: 'users fetched', users: allUsers });
   } catch (error) {
     console.error('❌', error);
     response.status(500).send();
