@@ -66,6 +66,7 @@ export const createNewUser = async (request, response, next) => {
       .json({
         message: 'account created',
         user: {
+          id: savedUser._id,
           name: savedUser.name,
           username: savedUser.username,
           profilePicture: savedUser.profilePicture,
@@ -76,6 +77,62 @@ export const createNewUser = async (request, response, next) => {
     response.status(500).send();
   }
 };
+
+export async function login(request, response, next) {
+  try {
+    const { username, password } = request.body;
+
+    // get user && confirm credentials
+    const foundUser = await User.findOne({ username });
+    if (!foundUser)
+      return response.status(400).json({
+        message: 'bad credentials',
+      });
+
+    const verifiedPass = await bcrypt.compare(password, foundUser.passwordHash);
+    if (!verifiedPass)
+      return response.status(400).json({
+        message: 'bad credentials',
+      });
+
+    // generate token
+    const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // send cookie
+    response
+      .status(200)
+      .cookie('token', token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 3.6e6), // 1 hour
+      })
+      .json({
+        message: 'logged in',
+        user: {
+          id: foundUser._id,
+          name: foundUser.name,
+          username: foundUser.username,
+          profilePicture: foundUser.profilePicture,
+        },
+      });
+  } catch (error) {
+    console.error('❌', error);
+    response.status(500).send();
+  }
+}
+
+export async function logout(request, response, next) {
+  try {
+    response
+      .cookie('token', '', {
+        httpOnly: true,
+        expires: new Date(0),
+      })
+      .send();
+  } catch (error) {
+    console.error('❌', error);
+    response.status(500).send();
+  }
+}
 
 export async function getAllUsers(request, response, next) {
   try {

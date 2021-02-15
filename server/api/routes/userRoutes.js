@@ -1,6 +1,6 @@
 import express from 'express';
 import { authFromCookie } from '../middlewares/auth.js';
-import { createNewUser, getAllUsers } from '../controllers/userControllers.js'; // import request & response function
+import { createNewUser, login, logout, getAllUsers } from '../controllers/userControllers.js'; // import request & response function
 
 // initialize router
 const router = express.Router();
@@ -12,7 +12,9 @@ const router = express.Router();
   3rd param = request & response function (controller)
 */
 
-router.post('/new', (request, response, next) => next(), createNewUser);
+router.post('/new', createNewUser);
+router.post('/login', login);
+router.get('/logout', logout);
 router.get('/', authFromCookie, getAllUsers);
 
 export default router;
