@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
-import styles from './index.module.css';
+import { useDispatch } from 'react-redux';
+import { login } from '../../actions/userActions';
 import FileBase64 from 'react-file-base64';
 import axios from '../../api';
 import Loading from '../Loading';
@@ -8,15 +9,19 @@ import Input from '../Input';
 import TwitterIcon from '../../icons/Twitter';
 import BackIcon from '../../icons/Back';
 import CameraIcon from '../../icons/Camera';
+import styles from './index.module.css';
 
 export default function RegisterForm() {
   const [phase, setPhase] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [profilePic, setProfilePic] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +40,7 @@ export default function RegisterForm() {
         console.log(`✅ ${response.status} ${response.statusText}`);
         setSubmitting(false);
 
-        console.log(response);
+        dispatch(login(response.data.user));
         alert('account registered successfully');
       } catch (error) {
         console.error('❌', error);

@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import styles from './index.module.css';
+import { useDispatch } from 'react-redux';
+import { login } from '../../actions/userActions';
 import axios from '../../api';
 import Input from '../Input';
 import Button from '../Button';
 import Loading from '../Loading';
+import styles from './index.module.css';
 
 export default function LoginForm({ onPage, clickRegister }) {
   const [submitting, setSubmitting] = useState(false);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ export default function LoginForm({ onPage, clickRegister }) {
       console.log(`✅ ${response.status} ${response.statusText}`);
       setSubmitting(false);
 
-      console.log(response);
+      dispatch(login(response.data.user));
       alert('logged in successfully');
     } catch (error) {
       console.error('❌', error);
