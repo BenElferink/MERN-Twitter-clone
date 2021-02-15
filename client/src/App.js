@@ -42,7 +42,7 @@ export default function App() {
         <Router>
           {isRegister && (
             <LazyLoad>
-              <RegisterModal />
+              <RegisterModal closeModal={() => setIsSubmitting(false)} />
             </LazyLoad>
           )}
 

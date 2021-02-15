@@ -10,17 +10,16 @@ import TwitterIcon from '../../icons/Twitter';
 import BackIcon from '../../icons/Back';
 import CameraIcon from '../../icons/Camera';
 import styles from './index.module.css';
+import WhoToFollow from '../WhoToFollow';
 
-export default function RegisterForm() {
+export default function RegisterForm({ closeModal }) {
   const [phase, setPhase] = useState(1);
   const [submitting, setSubmitting] = useState(false);
-
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [profilePic, setProfilePic] = useState('');
-
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -38,15 +37,13 @@ export default function RegisterForm() {
       try {
         const response = await axios.post('/users/new', formData);
         console.log(`✅ ${response.status} ${response.statusText}`);
-        setSubmitting(false);
-
         dispatch(login(response.data.user));
-        // setPhase(4)
+        setSubmitting(false);
+        setPhase(4);
         alert('account registered successfully');
       } catch (error) {
         console.error('❌', error);
         setSubmitting(false);
-
         if (error.response.status === 400) {
           alert(error.response.data.message);
         } else {
@@ -62,7 +59,7 @@ export default function RegisterForm() {
     <form className={styles.main} onSubmit={handleSubmit}>
       {/* form nav (phase controller) */}
       <div className={styles.nav}>
-        {phase !== 1 ? (
+        {phase !== 1 && phase !== 4 ? (
           <BackIcon className={styles.back} onClick={() => setPhase(phase - 1)} />
         ) : (
           <None />
@@ -74,6 +71,10 @@ export default function RegisterForm() {
           </button>
         ) : phase === 3 ? (
           <None />
+        ) : phase === 4 ? (
+          <button className={styles.skip} onClick={closeModal}>
+            Skip for now
+          </button>
         ) : (
           <Button
             text='Next'
@@ -89,6 +90,8 @@ export default function RegisterForm() {
         <h2>Create your account</h2>
       ) : phase === 2 ? (
         <h2>Pick a profile picture</h2>
+      ) : phase === 4 ? (
+        <h2>Who to follow</h2>
       ) : null}
 
       {/* phase inputs */}
@@ -144,6 +147,9 @@ export default function RegisterForm() {
       ) : phase === 3 && !submitting ? (
         <Button text='Sign up' design='filled' type='submit' />
       ) : null}
+
+      {/* list of people on twitter */}
+      {phase === 4 && <WhoToFollow />}
     </form>
   );
 }

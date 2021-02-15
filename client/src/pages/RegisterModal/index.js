@@ -1,11 +1,11 @@
 import styles from './index.module.css';
 import RegisterForm from '../../components/RegisterForm';
 
-export default function RegisterModal() {
+export default function RegisterModal({ closeModal }) {
   return (
     <div className={styles.modalBg}>
       <div className={styles.modal}>
-        <RegisterForm />
+        <RegisterForm closeModal={closeModal} />
 
         {/* bottom disclaimer */}
         <p className={styles.disclaimer}>

@@ -9,10 +9,8 @@ import styles from './index.module.css';
 
 export default function LoginForm({ onPage, clickRegister }) {
   const [submitting, setSubmitting] = useState(false);
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -26,14 +24,12 @@ export default function LoginForm({ onPage, clickRegister }) {
     try {
       const response = await axios.post('/users/login', formData);
       console.log(`✅ ${response.status} ${response.statusText}`);
-      setSubmitting(false);
-
       dispatch(login(response.data.user));
+      setSubmitting(false);
       alert('logged in successfully');
     } catch (error) {
       console.error('❌', error);
       setSubmitting(false);
-
       if (error.response.status === 400) {
         alert(error.response.data.message);
       } else {
