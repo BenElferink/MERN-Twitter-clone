@@ -9,10 +9,24 @@ export function authFromCookie(request, response, next) {
       request.user = verified.id;
       next();
     } else {
-      response.status(401).json({ message: 'Unauthorized' });
+      response
+        .status(401)
+        .cookie('token', '', {
+          httpOnly: true,
+          sameSite: 'Strict',
+          expires: new Date(0),
+        })
+        .json({ message: 'Unauthorized' });
     }
   } catch (error) {
-    console.log(error);
-    response.status(401).json({ message: 'Unauthorized' });
+    console.error('❌', error);
+    response
+      .status(401)
+      .cookie('token', '', {
+        httpOnly: true,
+        sameSite: 'Strict',
+        expires: new Date(0),
+      })
+      .json({ message: 'Unauthorized' });
   }
 }

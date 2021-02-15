@@ -125,12 +125,33 @@ export async function login(request, response, next) {
 export async function logout(request, response, next) {
   try {
     response
+      .status(200)
       .cookie('token', '', {
         httpOnly: true,
         sameSite: 'Strict',
         expires: new Date(0),
       })
       .send();
+  } catch (error) {
+    console.error('❌', error);
+    response.status(500).send();
+  }
+}
+
+export async function getOneUser(request, response, next) {
+  try {
+    // fetch user
+    const foundUser = await User.findOne({ _id: request.user }).select('-passwordHash -email');
+
+    response.status(200).json({
+      message: 'user fetched',
+      user: {
+        id: foundUser._id,
+        name: foundUser.name,
+        username: foundUser.username,
+        profilePicture: foundUser.profilePicture,
+      },
+    });
   } catch (error) {
     console.error('❌', error);
     response.status(500).send();

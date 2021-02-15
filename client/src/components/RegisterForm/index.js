@@ -41,6 +41,7 @@ export default function RegisterForm() {
         setSubmitting(false);
 
         dispatch(login(response.data.user));
+        // setPhase(4)
         alert('account registered successfully');
       } catch (error) {
         console.error('❌', error);
