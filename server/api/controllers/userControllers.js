@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+import { verifitizeName } from '../middlewares/verifyAndSanitize.js';
 // more about response status codes   --->   https://restapitutorial.com/httpstatuscodes.html
 
 export const createNewUser = async (request, response, next) => {
@@ -16,22 +16,36 @@ export const createNewUser = async (request, response, next) => {
       });
 
     if (password.length < 7)
-      return response.status(400).json({ message: 'password must contain at least 7 characters' });
+      return response.status(400).json({
+        message: 'password must contain at least 7 characters',
+      });
+
+    const verifitizedName = verifitizeName(name);
+    if (!verifitizedName)
+      return response.status(400).json({
+        message: 'name must contain alphabetical characters, no numbers or symbols',
+      });
 
     const foundByEmail = await User.findOne({ email });
     if (foundByEmail)
-      return response.status(400).json({ message: 'a user exists with that email', email });
+      return response.status(400).json({
+        message: 'a user exists with that email',
+        email,
+      });
 
     const foundByUsername = await User.findOne({ username });
     if (foundByUsername)
-      return response.status(400).json({ message: 'a user exists with that username', username });
+      return response.status(400).json({
+        message: 'a user exists with that username',
+        username,
+      });
 
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(password, salt);
 
     // create user
     let newUser = new User({
-      name,
+      name: verifitizedName,
       username,
       email,
       passwordHash: hash,
@@ -47,7 +61,7 @@ export const createNewUser = async (request, response, next) => {
       .status(201)
       .cookie('token', token, {
         httpOnly: true,
-        // expires: new Date(new Date().setTime(new Date().getTime() + 1 * 60 * 60 * 1000)), // 1 hour
+        expires: new Date(Date.now() + 3.6e6), // 1 hour
       })
       .json({
         message: 'account created',
@@ -68,7 +82,10 @@ export async function getAllUsers(request, response, next) {
     // fetch all users
     const allUsers = await User.find().select('username profilePicture');
 
-    response.status(200).json({ message: 'users fetched', users: allUsers });
+    response.status(200).json({
+      message: 'users fetched',
+      users: allUsers,
+    });
   } catch (error) {
     console.error('❌', error);
     response.status(500).send();
