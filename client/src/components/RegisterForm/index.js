@@ -20,7 +20,6 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (phase === 3) {
       setSubmitting(true);
       const formData = {
@@ -36,7 +35,8 @@ export default function RegisterForm() {
         console.log(`✅ ${response.status} ${response.statusText}`);
         setSubmitting(false);
 
-        alert('success');
+        console.log(response);
+        alert('account registered successfully');
       } catch (error) {
         console.error('❌', error);
         setSubmitting(false);
@@ -134,7 +134,7 @@ export default function RegisterForm() {
 
       {/* submit */}
       {phase === 3 && submitting ? (
-        <Loading type='Oval' color='#03A9F4' width={50} height={50} />
+        <Loading />
       ) : phase === 3 && !submitting ? (
         <Button text='Sign up' design='filled' type='submit' />
       ) : null}

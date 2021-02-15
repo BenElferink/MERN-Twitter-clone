@@ -1,6 +1,6 @@
 /* top nav */
 .nav {
-  margin-bottom: 1em;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,7 +8,6 @@
 .nav svg {
   width: 25px;
   height: 25px;
-  margin: 5px 0;
   fill: var(--twitterBlue);
 }
 .nav > button {
@@ -21,10 +20,8 @@
 }
 
 .back {
-  height: 30px !important;
   width: 70px !important;
   margin: 0 !important;
-  padding: 2px;
   background-color: transparent;
   border-radius: 100%;
   cursor: pointer;
@@ -46,7 +43,7 @@
 
 /* modal content */
 .main > h2 {
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
   font-weight: 100 !important;
 }
 

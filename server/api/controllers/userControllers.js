@@ -61,6 +61,7 @@ export const createNewUser = async (request, response, next) => {
       .status(201)
       .cookie('token', token, {
         httpOnly: true,
+        sameSite: 'Strict',
         expires: new Date(Date.now() + 3.6e6), // 1 hour
       })
       .json({
@@ -103,6 +104,7 @@ export async function login(request, response, next) {
       .status(200)
       .cookie('token', token, {
         httpOnly: true,
+        sameSite: 'Strict',
         expires: new Date(Date.now() + 3.6e6), // 1 hour
       })
       .json({
@@ -125,6 +127,7 @@ export async function logout(request, response, next) {
     response
       .cookie('token', '', {
         httpOnly: true,
+        sameSite: 'Strict',
         expires: new Date(0),
       })
       .send();
