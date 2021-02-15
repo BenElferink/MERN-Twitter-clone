@@ -20,28 +20,32 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (phase === 3) {
       setSubmitting(true);
+      const formData = {
+        name,
+        username,
+        email,
+        password,
+        imageBase64: profilePic.base64,
+      };
 
       try {
-        const response = await axios.post('/users/new', {
-          name,
-          username,
-          email,
-          password,
-          imageBase64: profilePic.base64,
-        });
-        console.log(response);
-        alert('success');
+        const response = await axios.post('/users/new', formData);
+        console.log(`✅ ${response.status} ${response.statusText}`);
         setSubmitting(false);
+
+        alert('success');
       } catch (error) {
-        console.error(error);
+        console.error('❌', error);
+        setSubmitting(false);
+
         if (error.response.status === 400) {
           alert(error.response.data.message);
         } else {
-          alert('❌ An unnexpected error occurred');
+          alert('an unnexpected error occurred');
         }
-        setSubmitting(false);
       }
     }
   };
@@ -50,7 +54,7 @@ export default function RegisterForm() {
 
   return (
     <form className={styles.main} onSubmit={handleSubmit}>
-      {/* top nav */}
+      {/* form nav (phase controller) */}
       <div className={styles.nav}>
         {phase !== 1 ? (
           <BackIcon className={styles.back} onClick={() => setPhase(phase - 1)} />
@@ -81,7 +85,7 @@ export default function RegisterForm() {
         <h2>Pick a profile picture</h2>
       ) : null}
 
-      {/* phase contents */}
+      {/* phase inputs */}
       {phase === 2 || phase === 3 ? (
         <div className={styles.picSelect}>
           <FileBase64 multiple={false} onDone={(file) => setProfilePic(file)} />
@@ -127,6 +131,8 @@ export default function RegisterForm() {
           />
         </Fragment>
       ) : null}
+
+      {/* submit */}
       {phase === 3 && submitting ? (
         <Loading type='Oval' color='#03A9F4' width={50} height={50} />
       ) : phase === 3 && !submitting ? (
