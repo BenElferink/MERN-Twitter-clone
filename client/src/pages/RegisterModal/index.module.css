@@ -23,6 +23,11 @@
   justify-content: space-between;
 }
 
+.disclaimer {
+  color: #818181;
+  font-size: 0.8em;
+}
+
 /*
   Small Devices, Tablets
 */
