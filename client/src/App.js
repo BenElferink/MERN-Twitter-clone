@@ -15,16 +15,20 @@ export default function App() {
   const [isRegister, setIsRegister] = useState(false);
   const clickRegister = () => setIsRegister(true);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
+      setIsSubmitting(true);
       try {
         const response = await axios.get('/users/authenticate');
         console.log(`✅ ${response.status} ${response.statusText}`);
         dispatch(login(response.data.user));
+        setIsSubmitting(false);
       } catch (error) {
         console.error('❌', error);
+        setIsSubmitting(false);
       }
     })();
     // eslint-disable-next-line
@@ -32,33 +36,52 @@ export default function App() {
 
   return (
     <div className='App'>
-      <Router>
-        {isRegister && (
-          <LazyLoad>
-            <RegisterModal />
-          </LazyLoad>
-        )}
+      {isSubmitting ? (
+        <Load />
+      ) : (
+        <Router>
+          {isRegister && (
+            <LazyLoad>
+              <RegisterModal />
+            </LazyLoad>
+          )}
 
-        <Switch>
-          <LazyLoad>
+          <Switch>
             <ProtectedRoute
               exact
               path='/'
-              Public={() => <PublicPage clickRegister={clickRegister} />}
-              Private={() => <FeedPage />}
+              Public={() => (
+                <LazyLoad>
+                  <PublicPage clickRegister={clickRegister} />
+                </LazyLoad>
+              )}
+              Private={() => (
+                <LazyLoad>
+                  <FeedPage />
+                </LazyLoad>
+              )}
             />
+
             <ProtectedRoute
               path='/login'
-              Public={() => <LoginPage clickRegister={clickRegister} />}
+              Public={() => (
+                <LazyLoad>
+                  <LoginPage clickRegister={clickRegister} />
+                </LazyLoad>
+              )}
               Private={() => <Redirect to='/' />}
             />
-          </LazyLoad>
-        </Switch>
-      </Router>
+          </Switch>
+        </Router>
+      )}
     </div>
   );
 }
 
+function Load() {
+  return <Loading height='100vh' />;
+}
+
 function LazyLoad({ children }) {
-  return <Suspense fallback={<Loading />}>{children}</Suspense>;
+  return <Suspense fallback={<Load />}>{children}</Suspense>;
 }
