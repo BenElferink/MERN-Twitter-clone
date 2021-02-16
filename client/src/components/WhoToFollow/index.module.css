@@ -10,16 +10,10 @@
   align-items: center;
 }
 
-.listItem > img {
-  width: 42px;
-  height: 42px;
-  border-radius: 100%;
-}
-
 .listItem > p {
   flex: 1;
   padding: 0 10px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .listItem > button {

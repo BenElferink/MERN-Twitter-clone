@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from '../../api';
 import Loading from '../Loading';
+import ProfilePicture from '../ProfilePicture';
 import styles from './index.module.css';
 
 export default function WhoToFollow() {
+  const { id } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -28,13 +31,16 @@ export default function WhoToFollow() {
       {loading ? (
         <Loading />
       ) : (
-        users.map((user) => (
-          <div key={user._id} className={styles.listItem}>
-            <img src={user.profilePicture || 'http://localhost:8080/images/user.jpg'} alt='' />
-            <p>@{user.username}</p>
-            <button onClick={() => null}>+Follow</button>
-          </div>
-        ))
+        users.map(
+          (user) =>
+            user._id !== id && (
+              <div key={user._id} className={styles.listItem}>
+                <ProfilePicture image={user.profilePicture} size='42px' />
+                <p>@{user.username}</p>
+                <button onClick={() => null}>+Follow</button>
+              </div>
+            ),
+        )
       )}
     </div>
   );
