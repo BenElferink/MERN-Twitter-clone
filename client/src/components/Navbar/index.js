@@ -1,4 +1,4 @@
-import TwitterIcon from '../../icons/Twitter';
+import { useEffect, useState } from 'react';
 import Button from '../Button';
 import ProfilePicture from '../ProfilePicture';
 import Home from '../../icons/Home';
@@ -6,9 +6,22 @@ import Hashtag from '../../icons/Hashtag';
 import Bell from '../../icons/Bell';
 import Mail from '../../icons/Mail';
 import User from '../../icons/User';
+import TwitterIcon from '../../icons/Twitter';
+import NewTweetIcon from '../../icons/NewTweet';
 import styles from './index.module.css';
 
 export default function Navbar({ navState }) {
+  const [view, setView] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handler = () => setView(window.innerWidth);
+    window.addEventListener('resize', handler);
+
+    return () => {
+      window.removeEventListener('resize', handler);
+    };
+  }, []);
+
   return (
     <div className={styles.component}>
       <nav>
@@ -18,7 +31,7 @@ export default function Navbar({ navState }) {
         <NavItem title='Notifications' Icon={Bell} navState={navState} />
         <NavItem title='Messages' Icon={Mail} navState={navState} />
         <NavItem title='Profile' Icon={User} navState={navState} />
-        <Button text={'Tweet'} design='filled' />
+        <Button design='filled'>{view >= 1200 ? 'Tweet' : <NewTweetIcon />}</Button>
       </nav>
 
       <UserChip />

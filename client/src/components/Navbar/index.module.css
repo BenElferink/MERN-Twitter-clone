@@ -18,14 +18,12 @@
 }
 
 .component > nav > button {
-  background: url('./new-tweet.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-color: var(--twitterBlue);
-  font-size: 0em;
   width: 42px;
   height: 42px;
+}
+.component > nav > button > svg {
+  margin: 4px;
+  fill: #f5f5f5;
 }
 
 .selected {
@@ -94,8 +92,6 @@
   }
 
   .component > nav > button {
-    background: var(--twitterBlue);
-    font-size: 1em;
     width: -webkit-fill-available;
     width: -moz-available;
     width: stretch;

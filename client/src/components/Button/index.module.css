@@ -4,6 +4,8 @@
   width: stretch;
   line-height: 42px;
   margin: 5px;
+  display: grid;
+  place-items: center;
   background-color: transparent;
   border: none;
   border-radius: 2rem;
