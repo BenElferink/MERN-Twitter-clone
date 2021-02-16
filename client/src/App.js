@@ -9,7 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 const PublicPage = lazy(() => import('./pages/PublicPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterModal = lazy(() => import('./pages/RegisterModal'));
-const FeedPage = lazy(() => import('./pages/FeedPage'));
+const TwitterPage = lazy(() => import('./pages/TwitterPage'));
 
 export default function App() {
   const [isRegister, setIsRegister] = useState(false);
@@ -40,12 +40,6 @@ export default function App() {
         <Load />
       ) : (
         <Router>
-          {isRegister && (
-            <LazyLoad>
-              <RegisterModal closeModal={() => setIsRegister(false)} />
-            </LazyLoad>
-          )}
-
           <Switch>
             <ProtectedRoute
               exact
@@ -57,7 +51,7 @@ export default function App() {
               )}
               Private={() => (
                 <LazyLoad>
-                  <FeedPage />
+                  <TwitterPage />
                 </LazyLoad>
               )}
             />
@@ -71,6 +65,12 @@ export default function App() {
               )}
               Private={() => <Redirect to='/' />}
             />
+
+            {isRegister && (
+              <LazyLoad>
+                <RegisterModal closeModal={() => setIsRegister(false)} />
+              </LazyLoad>
+            )}
           </Switch>
         </Router>
       )}

@@ -1,0 +1,15 @@
+.component {
+  display: none;
+}
+
+/*
+  Medium Devices, Desktops
+*/
+@media only screen and (min-width: 992px) {
+  /* show component */
+  .component {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+}
