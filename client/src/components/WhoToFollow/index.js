@@ -54,7 +54,7 @@ export default function WhoToFollow() {
                 <ProfilePicture image={user.profilePicture} size='42px' />
                 <p>@{user.username}</p>
                 {requesting === user._id ? (
-                  <Loading size={20} />
+                  <Loading width='69px' size={20} />
                 ) : (
                   <button onClick={() => handleFollowClicked(user._id)} disabled={requesting}>
                     {following.find((item) => item === user._id) ? 'Unfollow' : '+Follow'}
