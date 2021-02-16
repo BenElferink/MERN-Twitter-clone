@@ -1,4 +1,6 @@
 import User from '../models/User.js';
+import Tweet from '../models/Tweet.js';
+import ReTweet from '../models/ReTweet.js';
 // more about response status codes   --->   https://restapitutorial.com/httpstatuscodes.html
 
 export async function getAllUsers(request, response, next) {
@@ -57,6 +59,70 @@ export async function toggleFollowingUser(request, response, next) {
         following: requestOwner.following,
         followers: requestOwner.followers,
       },
+    });
+  } catch (error) {
+    console.error('❌', error);
+    response.status(500).send();
+  }
+}
+
+export async function postTweet(request, response, next) {
+  try {
+    const { user } = request;
+    const { message, image } = request.body;
+
+    const newTweet = new Tweet({
+      from: user,
+      message,
+      image,
+    });
+    await newTweet.save();
+    await Tweet.populate(newTweet, {
+      path: 'from',
+      select: 'name username profilePicture',
+    });
+
+    response.status(201).json({
+      message: 'tweet created',
+      tweet: newTweet,
+    });
+  } catch (error) {
+    console.error('❌', error);
+    response.status(500).send();
+  }
+}
+
+export async function getFeedTweets(request, response, next) {
+  try {
+    const { user } = request;
+
+    // find user
+    const foundUser = await User.findOne({ _id: user });
+
+    // find all tweets from user && following
+    let allTweets = await Tweet.find({ from: user }).populate({
+      path: 'from',
+      select: 'name username profilePicture',
+    });
+    // let newAllTweets = foundUser.following.map(
+    //   async (followerId) =>
+    //     await Tweet.find({ from: followerId }).populate({
+    //       path: 'from',
+    //       select: 'name username profilePicture',
+    //     }),
+    // );
+
+    console.log(allTweets);
+    // console.log(newAllTweets);
+
+    // sort by timestamp
+    allTweets = allTweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // send to client
+    response.status(200).json({
+      message: 'tweets fetched',
+      tweets: allTweets,
+      // testTweets: newAllTweets,
     });
   } catch (error) {
     console.error('❌', error);

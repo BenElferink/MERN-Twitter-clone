@@ -1,11 +1,14 @@
 import { useRef, useState } from 'react';
+import axios from '../../api';
 import Button from '../Button';
 import ProfilePicture from '../ProfilePicture';
 import ImageIcon from '../../icons/Image';
 import EmojiIcon from '../../icons/Emoji';
 import styles from './index.module.css';
+import Loading from '../Loading';
 
-export default function PostTweet() {
+export default function PostTweet({ addTweet }) {
+  const [submitting, setSubmitting] = useState(false);
   const [tweetText, setTweetText] = useState('');
   const tweetTextRef = useRef();
 
@@ -16,8 +19,24 @@ export default function PostTweet() {
     tweetTextRef.current.style.cssText = 'height:' + tweetTextRef.current.scrollHeight + 'px';
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    const formData = {
+      message: tweetText,
+      image: null,
+    };
+
+    try {
+      const response = await axios.post('/twitter/tweet', formData);
+      console.log(`✅ ${response.status} ${response.statusText}`);
+      console.log(response.data);
+      addTweet(response.data.tweet);
+      setTweetText('');
+    } catch (error) {
+      console.error('❌', error);
+    }
+    setSubmitting(false);
   };
 
   return (
@@ -44,7 +63,11 @@ export default function PostTweet() {
           <div className={styles.formOption} onClick={() => null}>
             <EmojiIcon />
           </div>
-          <Button text='Tweet' design='filled' type='submit' disabled={!tweetText} />
+          {submitting ? (
+            <Loading size={30} />
+          ) : (
+            <Button text='Tweet' design='filled' type='submit' disabled={!tweetText} />
+          )}
         </div>
       </form>
     </div>

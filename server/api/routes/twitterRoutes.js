@@ -1,6 +1,11 @@
 import express from 'express';
 import { authFromCookie } from '../middlewares/auth.js';
-import { getAllUsers, toggleFollowingUser } from '../controllers/twitterControllers.js'; // import request & response function
+import {
+  getAllUsers,
+  toggleFollowingUser,
+  postTweet,
+  getFeedTweets,
+} from '../controllers/twitterControllers.js'; // import request & response function
 
 // initialize router
 const router = express.Router();
@@ -14,5 +19,7 @@ const router = express.Router();
 
 router.get('/users', authFromCookie, getAllUsers);
 router.post('/follow/:id', authFromCookie, toggleFollowingUser);
+router.post('/tweet', authFromCookie, postTweet);
+router.get('/tweets', authFromCookie, getFeedTweets);
 
 export default router;
