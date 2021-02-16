@@ -1,9 +1,6 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from './actions/userActions';
 import './styles/styles.css';
-import axios from './api';
 import Loading from './components/Loading';
 import ProtectedRoute from './components/ProtectedRoute';
 const PublicPage = lazy(() => import('./pages/PublicPage'));
@@ -15,73 +12,47 @@ export default function App() {
   const [isRegister, setIsRegister] = useState(false);
   const clickRegister = () => setIsRegister(true);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    (async () => {
-      setIsSubmitting(true);
-      try {
-        const response = await axios.get('/users/authenticate');
-        console.log(`✅ ${response.status} ${response.statusText}`);
-        dispatch(login(response.data.user));
-        setIsSubmitting(false);
-      } catch (error) {
-        console.error('❌', error);
-        setIsSubmitting(false);
-      }
-    })();
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <div className='App'>
-      {isSubmitting ? (
-        <Load />
-      ) : (
-        <Router>
-          <Switch>
-            <ProtectedRoute
-              exact
-              path='/'
-              Public={() => (
-                <LazyLoad>
-                  <PublicPage clickRegister={clickRegister} />
-                </LazyLoad>
-              )}
-              Private={() => (
-                <LazyLoad>
-                  <TwitterPage />
-                </LazyLoad>
-              )}
-            />
-
-            <ProtectedRoute
-              path='/login'
-              Public={() => (
-                <LazyLoad>
-                  <LoginPage clickRegister={clickRegister} />
-                </LazyLoad>
-              )}
-              Private={() => <Redirect to='/' />}
-            />
-
-            {isRegister && (
+      <Router>
+        <Switch>
+          <ProtectedRoute
+            exact
+            path='/'
+            Public={() => (
               <LazyLoad>
-                <RegisterModal closeModal={() => setIsRegister(false)} />
+                <PublicPage clickRegister={clickRegister} />
               </LazyLoad>
             )}
-          </Switch>
-        </Router>
-      )}
+            Private={() => (
+              <LazyLoad>
+                <TwitterPage />
+              </LazyLoad>
+            )}
+          />
+
+          <ProtectedRoute
+            exact
+            path='/login'
+            Public={() => (
+              <LazyLoad>
+                <LoginPage clickRegister={clickRegister} />
+              </LazyLoad>
+            )}
+            Private={() => <Redirect to='/' />}
+          />
+
+          {isRegister && (
+            <LazyLoad>
+              <RegisterModal closeModal={() => setIsRegister(false)} />
+            </LazyLoad>
+          )}
+        </Switch>
+      </Router>
     </div>
   );
 }
 
-function Load() {
-  return <Loading height='100vh' />;
-}
-
 function LazyLoad({ children }) {
-  return <Suspense fallback={<Load />}>{children}</Suspense>;
+  return <Suspense fallback={<Loading height='100vh' />}>{children}</Suspense>;
 }
