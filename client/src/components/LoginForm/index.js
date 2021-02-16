@@ -22,7 +22,7 @@ export default function LoginForm({ onPage, clickRegister }) {
     };
 
     try {
-      const response = await axios.post('/users/login', formData);
+      const response = await axios.post('/auth/login', formData);
       console.log(`✅ ${response.status} ${response.statusText}`);
       dispatch(login(response.data.user));
       // setSubmitting(false);

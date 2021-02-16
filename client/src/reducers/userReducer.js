@@ -4,6 +4,8 @@ const initialState = {
   name: null,
   username: null,
   profilePicture: null,
+  following: [],
+  followers: [],
 };
 
 export const userReducer = (state = initialState, action) => {

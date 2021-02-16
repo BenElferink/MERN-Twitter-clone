@@ -1,12 +1,6 @@
 import express from 'express';
 import { authFromCookie } from '../middlewares/auth.js';
-import {
-  createNewUser,
-  login,
-  logout,
-  getOneUser,
-  getAllUsers,
-} from '../controllers/userControllers.js'; // import request & response function
+import { getAllUsers, toggleFollowingUser } from '../controllers/twitterControllers.js'; // import request & response function
 
 // initialize router
 const router = express.Router();
@@ -18,10 +12,7 @@ const router = express.Router();
   3rd param = request & response function (controller)
 */
 
-router.post('/new', createNewUser);
-router.post('/login', login);
-router.get('/logout', logout);
-router.get('/authenticate', authFromCookie, getOneUser);
-router.get('/', authFromCookie, getAllUsers);
+router.get('/users', authFromCookie, getAllUsers);
+router.post('/follow/:id', authFromCookie, toggleFollowingUser);
 
 export default router;

@@ -4,7 +4,8 @@ import dotenv from 'dotenv'; // Secures variables
 import cors from 'cors'; // HTTP headers (enable requests)
 import cookieParser from 'cookie-parser'; // Cookie parser
 import morgan from 'morgan'; // Logs incoming requests
-import userRoutes from './api/routes/userRoutes.js';
+import authRoutes from './api/routes/authRoutes.js';
+import twitterRoutes from './api/routes/twitterRoutes.js';
 
 // initialize app
 const app = express();
@@ -34,7 +35,8 @@ db.on('error', (error) => console.error('❌ MongoDB connection error', error));
 
 // routes
 app.get('/', (request, response, next) => response.status(200).json('<h1>Hello World!</h1>'));
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/twitter', twitterRoutes);
 app.use(express.static('./public'));
 
 // server is listening for requests

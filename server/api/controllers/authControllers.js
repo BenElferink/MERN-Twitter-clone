@@ -71,6 +71,8 @@ export const createNewUser = async (request, response, next) => {
           name: savedUser.name,
           username: savedUser.username,
           profilePicture: savedUser.profilePicture,
+          following: savedUser.following,
+          followers: savedUser.followers,
         },
       });
   } catch (error) {
@@ -114,6 +116,8 @@ export async function login(request, response, next) {
           name: foundUser.name,
           username: foundUser.username,
           profilePicture: foundUser.profilePicture,
+          following: foundUser.following,
+          followers: foundUser.followers,
         },
       });
   } catch (error) {
@@ -150,22 +154,9 @@ export async function getOneUser(request, response, next) {
         name: foundUser.name,
         username: foundUser.username,
         profilePicture: foundUser.profilePicture,
+        following: foundUser.following,
+        followers: foundUser.followers,
       },
-    });
-  } catch (error) {
-    console.error('❌', error);
-    response.status(500).send();
-  }
-}
-
-export async function getAllUsers(request, response, next) {
-  try {
-    // fetch all users
-    const allUsers = await User.find().select('username profilePicture');
-
-    response.status(200).json({
-      message: 'users fetched',
-      users: allUsers,
     });
   } catch (error) {
     console.error('❌', error);

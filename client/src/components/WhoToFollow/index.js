@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../actions/userActions';
 import axios from '../../api';
 import Loading from '../Loading';
 import ProfilePicture from '../ProfilePicture';
 import styles from './index.module.css';
 
 export default function WhoToFollow() {
-  const { id } = useSelector((state) => state.user);
+  const { id, following } = useSelector((state) => state.user);
+
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/users');
+        const response = await axios.get('/twitter/users');
         console.log(`✅ ${response.status} ${response.statusText}`);
         setUsers(response.data.users);
         setLoading(false);
@@ -25,6 +26,21 @@ export default function WhoToFollow() {
     })();
     // eslint-disable-next-line
   }, []);
+
+  const [requesting, setRequesting] = useState(false);
+  const dispatch = useDispatch();
+  const handleFollowClicked = async (userId) => {
+    try {
+      setRequesting(userId);
+      const response = await axios.post('/twitter/follow/' + userId);
+      console.log(`✅ ${response.status} ${response.statusText}`);
+      dispatch(login(response.data.user));
+      setRequesting(false);
+    } catch (error) {
+      console.error('❌', error);
+      setRequesting(false);
+    }
+  };
 
   return (
     <div className={styles.list}>
@@ -37,7 +53,13 @@ export default function WhoToFollow() {
               <div key={user._id} className={styles.listItem}>
                 <ProfilePicture image={user.profilePicture} size='42px' />
                 <p>@{user.username}</p>
-                <button onClick={() => null}>+Follow</button>
+                {requesting === user._id ? (
+                  <Loading size={20} />
+                ) : (
+                  <button onClick={() => handleFollowClicked(user._id)} disabled={requesting}>
+                    {following.find((item) => item === user._id) ? 'Unfollow' : '+Follow'}
+                  </button>
+                )}
               </div>
             ),
         )

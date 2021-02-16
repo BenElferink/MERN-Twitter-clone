@@ -35,7 +35,7 @@ export default function RegisterForm({ closeModal }) {
       };
 
       try {
-        const response = await axios.post('/users/new', formData);
+        const response = await axios.post('/auth/register', formData);
         console.log(`✅ ${response.status} ${response.statusText}`);
         dispatch(login(response.data.user));
         setSubmitting(false);
