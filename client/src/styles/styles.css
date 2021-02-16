@@ -1,5 +1,6 @@
 :root {
   --twitterBlue: #03a9f4;
+  --twitterBlueSoft: #03a9f41a;
 }
 
 @font-face {
@@ -30,7 +31,7 @@ body {
   font-weight: 700;
 }
 .App h1 {
-  font-size: 4em;
+  font-size: 3.5em;
 }
 .App h2 {
   font-size: 2em;

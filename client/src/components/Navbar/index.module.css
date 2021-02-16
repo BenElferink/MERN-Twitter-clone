@@ -1,0 +1,128 @@
+.component {
+  max-width: 250px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* only twitter bird */
+.component > nav > svg {
+  width: 30px;
+  height: 30px;
+  margin: 9px;
+  padding: 4px;
+}
+
+.component > nav > button {
+  background: url('./new-tweet.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: var(--twitterBlue);
+  font-size: 0em;
+  width: 42px;
+  height: 42px;
+}
+
+.link {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 4px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 42px;
+  cursor: pointer;
+}
+
+.link > svg {
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+}
+
+.link > span {
+  display: none;
+}
+
+.link:hover,
+.link:active {
+  background-color: var(--twitterBlueSoft);
+  color: var(--twitterBlue);
+  fill: var(--twitterBlue);
+}
+
+.chip {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 4px;
+  border-radius: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.chip > div,
+.chip span,
+.chip p {
+  display: none;
+}
+.chip:hover,
+.chip:active {
+  background-color: var(--twitterBlueSoft);
+}
+
+/*
+  Medium Devices, Desktops
+*/
+@media only screen and (min-width: 992px) {
+  /* show search && other */
+}
+
+/*
+  Large Devices, Wide Screens
+*/
+@media only screen and (min-width: 1200px) {
+  /* expand nav */
+
+  .component {
+    width: 100%;
+  }
+
+  .component > nav > button {
+    background: var(--twitterBlue);
+    font-size: 1em;
+    width: 100%;
+    height: 100%;
+  }
+
+  .link > span {
+    display: inline;
+    margin: 0 12px;
+    font-size: 1.1em;
+    font-weight: 700;
+  }
+
+  .chip {
+    width: 100%;
+    margin: 5px;
+  }
+  .chip > div {
+    display: block;
+    flex: 0.9;
+  }
+  .chip span {
+    display: block;
+    font-weight: 700;
+  }
+  .chip p {
+    display: block;
+    color: #808080;
+  }
+}
