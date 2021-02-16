@@ -25,7 +25,7 @@ export default function LoginForm({ onPage, clickRegister }) {
       const response = await axios.post('/users/login', formData);
       console.log(`✅ ${response.status} ${response.statusText}`);
       dispatch(login(response.data.user));
-      setSubmitting(false);
+      // setSubmitting(false);
       alert('logged in successfully');
     } catch (error) {
       console.error('❌', error);
