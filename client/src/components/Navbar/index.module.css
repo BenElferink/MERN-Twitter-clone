@@ -13,7 +13,7 @@
 .component > nav > svg {
   width: 30px;
   height: 30px;
-  margin: 9px;
+  margin: 10px;
   padding: 4px;
 }
 
@@ -28,11 +28,16 @@
   height: 42px;
 }
 
+.selected {
+  color: var(--twitterBlue) !important;
+  fill: var(--twitterBlue) !important;
+}
+
 .link {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  margin: 4px;
+  margin: 10px 5px;
   padding: 5px;
   display: flex;
   align-items: center;
@@ -91,7 +96,9 @@
   .component > nav > button {
     background: var(--twitterBlue);
     font-size: 1em;
-    width: 100%;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: stretch;
     height: 100%;
   }
 

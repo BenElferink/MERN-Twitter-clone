@@ -8,16 +8,16 @@ import Mail from '../../icons/Mail';
 import User from '../../icons/User';
 import styles from './index.module.css';
 
-export default function Navbar() {
+export default function Navbar({ navState }) {
   return (
     <div className={styles.component}>
       <nav>
         <TwitterIcon />
-        <NavItem title='Home' Icon={Home} />
-        <NavItem title='Explore' Icon={Hashtag} />
-        <NavItem title='Notifications' Icon={Bell} />
-        <NavItem title='Messages' Icon={Mail} />
-        <NavItem title='Profile' Icon={User} />
+        <NavItem title='Home' Icon={Home} navState={navState} />
+        <NavItem title='Explore' Icon={Hashtag} navState={navState} />
+        <NavItem title='Notifications' Icon={Bell} navState={navState} />
+        <NavItem title='Messages' Icon={Mail} navState={navState} />
+        <NavItem title='Profile' Icon={User} navState={navState} />
         <Button text={'Tweet'} design='filled' />
       </nav>
 
@@ -26,9 +26,11 @@ export default function Navbar() {
   );
 }
 
-function NavItem({ title, Icon }) {
+function NavItem({ title, Icon, navState }) {
   return (
-    <div className={styles.link}>
+    <div
+      className={`${styles.link} ${navState.selectedNav === title && styles.selected}`}
+      onClick={() => navState.setSelectedNav(title)}>
       <Icon />
       <span>{title}</span>
     </div>
