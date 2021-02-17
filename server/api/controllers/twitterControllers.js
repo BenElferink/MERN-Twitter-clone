@@ -112,9 +112,6 @@ export async function getFeedTweets(request, response, next) {
     //     }),
     // );
 
-    console.log(allTweets);
-    // console.log(newAllTweets);
-
     // sort by timestamp
     allTweets = allTweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 

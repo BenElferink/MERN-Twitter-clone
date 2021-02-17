@@ -9,24 +9,61 @@
   flex: 1;
   padding: 5px 0 5px 0;
 }
-
-.head {
-  font-weight: 700;
+.box:hover {
+  background-color: #f5f5f5;
 }
 
-.head > span {
+.head {
   font-weight: 400;
   color: #818181;
+  cursor: pointer;
+}
+.head > span {
+  font-weight: 700;
+  color: #111;
+}
+.head:hover > span,
+.head:active > span {
+  text-decoration: underline;
 }
 
 .tweet {
-  margin: 5px 0;
+  margin: 7px 0;
+  cursor: pointer;
 }
 
 .tools {
-  margin: 5px 0;
+  margin: 10px 0 5px 0;
   padding: 0 42% 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #818181;
+  fill: #818181;
+}
+.tools > div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.tools svg {
+  width: 15px;
+  height: 15px;
+  margin: 0 7px 0 0;
+}
+
+.comment:hover,
+.comment:active {
+  color: var(--twitterBlue);
+  fill: var(--twitterBlue);
+}
+.retweet:hover,
+.retweet:active {
+  color: #86c202;
+  fill: #86c202;
+}
+.like:hover,
+.like:active {
+  color: #f403a9;
+  fill: #f403a9;
 }

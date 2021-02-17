@@ -1,28 +1,40 @@
+import { useHistory } from 'react-router-dom';
 import ProfilePicture from '../ProfilePicture';
+import CommentIcon from '../../icons/Comment';
+import ReTweetIcon from '../../icons/ReTweet';
+import HeartIcon from '../../icons/Heart';
 import styles from './index.module.css';
 
 export default function Tweet({ tweet }) {
+  const history = useHistory();
+
   return (
     <div className={styles.box}>
       <ProfilePicture image={tweet.from.profilePicture} />
 
       <div>
-        <div className={styles.head}>
-          {tweet.from.name}{' '}
-          <span>
-            @{tweet.from.username} • {timeAgo(tweet.createdAt)}
-          </span>
+        <div className={styles.head} onClick={() => history.push('/profile/' + tweet.from._id)}>
+          <span>{tweet.from.name}</span> @{tweet.from.username} • {timeAgo(tweet.createdAt)}
         </div>
 
-        <div className={styles.tweet}>
+        <div className={styles.tweet} onClick={() => history.push('/tweet/' + tweet._id)}>
           {tweet.message}
           {tweet.image && <img src={tweet.image} alt='tweet_image' />}
         </div>
 
         <div className={styles.tools}>
-          <div>COMMENT {tweet.comments.length}</div>
-          <div>RETWEET {tweet.retweets.length}</div>
-          <div>LIKE {tweet.likes.length}</div>
+          <div className={styles.comment}>
+            <CommentIcon />
+            {tweet.comments.length}
+          </div>
+          <div className={styles.retweet}>
+            <ReTweetIcon />
+            {tweet.retweets.length}
+          </div>
+          <div className={styles.like}>
+            <HeartIcon />
+            {tweet.likes.length}
+          </div>
         </div>
       </div>
     </div>
