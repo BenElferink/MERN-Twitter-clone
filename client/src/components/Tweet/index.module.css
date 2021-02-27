@@ -7,7 +7,7 @@
 }
 .box > div {
   flex: 1;
-  padding: 5px 0 5px 0;
+  padding: 5px 10px 5px 0;
 }
 .box:hover {
   background-color: #f5f5f5;

@@ -9,6 +9,7 @@ import User from '../../icons/User';
 import TwitterIcon from '../../icons/Twitter';
 import NewTweetIcon from '../../icons/NewTweet';
 import styles from './index.module.css';
+import axios from '../../api';
 
 export default function Navbar({ navState, openTweetModal }) {
   const [view, setView] = useState(window.innerWidth);
@@ -54,7 +55,14 @@ function NavItem({ title, Icon, navState }) {
 
 function UserChip() {
   return (
-    <div className={styles.chip}>
+    <div
+      className={styles.chip}
+      onClick={async () => {
+        if (window.confirm('Do you want to log out?')) {
+          await axios.get('/auth/logout');
+          window.location.reload();
+        }
+      }}>
       <ProfilePicture isLoggedUser={true} size='42px' />
       <div>
         <span>Name</span>

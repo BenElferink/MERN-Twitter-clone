@@ -10,6 +10,7 @@ import EmojiIcon from '../../icons/Emoji';
 export default function PostTweet({ addTweet }) {
   const [submitting, setSubmitting] = useState(false);
   const [tweetText, setTweetText] = useState('');
+  const [pic, setPic] = useState(null);
   const tweetTextRef = useRef();
 
   const handleSubmit = async (e) => {
@@ -17,7 +18,7 @@ export default function PostTweet({ addTweet }) {
     setSubmitting(true);
     const formData = {
       message: tweetText,
-      image: null,
+      image: pic?.base64 || null,
     };
 
     try {
@@ -26,10 +27,38 @@ export default function PostTweet({ addTweet }) {
       console.log(response.data);
       addTweet(response.data.tweet);
       setTweetText('');
+      setPic(null);
     } catch (error) {
       console.error('❌', error);
     }
     setSubmitting(false);
+  };
+
+  const handleImage = (e) => {
+    // get the files
+    const allFiles = e.target.files;
+    const file = allFiles[0];
+
+    // Make new FileReader
+    const reader = new FileReader();
+
+    // Convert the file to base64 text
+    reader.readAsDataURL(file);
+
+    // on reader load somthing...
+    reader.onload = () => {
+      // Make a fileInfo Object
+      const fileInfo = {
+        name: file.name,
+        type: file.type,
+        size: Math.round(file.size / 1000) + ' kB',
+        base64: reader.result,
+        file: file,
+      };
+
+      // Set it to the state
+      setPic(fileInfo);
+    };
   };
 
   const componentStyles = {
@@ -83,8 +112,21 @@ export default function PostTweet({ addTweet }) {
           }}
         />
 
+        {pic && <img src={pic.base64} alt={pic.name} />}
+
         <div style={toolStyles}>
-          <IconButton onClick={() => null}>
+          <IconButton style={{ position: 'relative' }}>
+            <input
+              onChange={handleImage}
+              type='file'
+              style={{
+                opacity: '0',
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                zIndex: '9',
+              }}
+            />
             <ImageIcon style={svgStyles} />
           </IconButton>
           <IconButton onClick={() => null}>

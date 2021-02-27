@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-export default function IconButton({ children, onClick, type }) {
+export default function IconButton({ children, onClick, type, style }) {
   const buttonRef = useRef(null),
     buttonStyles = {
       margin: '5px',
@@ -16,10 +16,10 @@ export default function IconButton({ children, onClick, type }) {
   return (
     <button
       ref={buttonRef}
-      style={buttonStyles}
+      style={{ ...buttonStyles, ...style }}
       onMouseEnter={() => (buttonRef.current.style.backgroundColor = 'var(--twitterBlueSoft)')}
       onMouseLeave={() => (buttonRef.current.style.backgroundColor = 'transparent')}
-      onClick={onClick}
+      onClick={onClick ? onClick : () => null}
       type={type}>
       {children}
     </button>

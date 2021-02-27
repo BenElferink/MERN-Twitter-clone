@@ -19,7 +19,13 @@ export default function Tweet({ tweet }) {
 
         <div className={styles.tweet} onClick={() => history.push('/tweet/' + tweet._id)}>
           {tweet.message}
-          {tweet.image && <img src={tweet.image} alt='tweet_image' />}
+          {tweet.image && (
+            <img
+              src={tweet.image}
+              alt='tweet_image'
+              style={{ borderRadius: '10px', margin: '10px 0 0 0' }}
+            />
+          )}
         </div>
 
         <div className={styles.tools}>

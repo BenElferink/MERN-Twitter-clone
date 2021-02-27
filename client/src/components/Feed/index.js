@@ -14,7 +14,6 @@ export default function Feed({ selectedNav }) {
       try {
         const response = await axios.get('/twitter/tweets');
         console.log(`✅ ${response.status} ${response.statusText}`);
-        console.log(response.data);
         setTweets(response.data.tweets);
         setFetching(false);
       } catch (error) {
