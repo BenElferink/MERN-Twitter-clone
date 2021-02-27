@@ -10,7 +10,7 @@ import TwitterIcon from '../../icons/Twitter';
 import NewTweetIcon from '../../icons/NewTweet';
 import styles from './index.module.css';
 import { logout } from '../../actions/userActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Navbar({ navState, openTweetModal }) {
   const [view, setView] = useState(window.innerWidth);
@@ -55,6 +55,7 @@ function NavItem({ title, Icon, navState }) {
 }
 
 function UserChip() {
+  const { name, username } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   return (
@@ -69,8 +70,8 @@ function UserChip() {
       }}>
       <ProfilePicture isLoggedUser={true} size='42px' />
       <div>
-        <span>Name</span>
-        <p>@username</p>
+        <span>{name}</span>
+        <p>@{username}</p>
       </div>
       <span>•••</span>
     </div>
