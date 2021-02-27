@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import axios from '../../api';
 import Loading from '../Loading';
 import PostTweet from '../PostTweet';
@@ -37,11 +37,25 @@ export default function Feed({ selectedNav }) {
   return (
     <div style={componentStyles}>
       <div style={titleStyles}>{selectedNav}</div>
-      {/* post tweet */}
-      <PostTweet addTweet={(tweet) => setTweets([tweet, ...tweets])} />
 
-      {/* tweets feed */}
-      {fetching ? <Loading /> : tweets.map((item) => <Tweet key={item._id} tweet={item} />)}
+      {selectedNav === 'Home' ? (
+        <Fragment>
+          {/* post tweet */}
+          <PostTweet addTweet={(tweet) => setTweets([tweet, ...tweets])} />
+
+          {/* tweets feed */}
+          {fetching ? <Loading /> : tweets.map((item) => <Tweet key={item._id} tweet={item} />)}
+        </Fragment>
+      ) : (
+        <div style={{ textAlign: 'center', paddingTop: '50px' }}>
+          LOL nice try! 😂
+          <br />
+          Just head over to{' '}
+          <a href='https://twitter.com' target='_blank' rel='noreferrer'>
+            https://twitter.com
+          </a>
+        </div>
+      )}
     </div>
   );
 }
