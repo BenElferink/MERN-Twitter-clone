@@ -1,11 +1,20 @@
+import useMediaQuery from '../../hooks/useMediaQuery';
 import WhoToFollow from '../WhoToFollow';
-import styles from './index.module.css';
 
 export default function FeedSuggestions() {
+  const isDesktop = useMediaQuery('(min-width: 992px)'),
+    componentStyles = {
+      display: isDesktop ? 'flex' : 'none',
+      flexDirection: 'column',
+      width: '300px',
+    };
+
   return (
-    <div className={styles.component}>
+    <div style={componentStyles}>
       SEARCH
-      <WhoToFollow />
+      <div style={{ backgroundColor: '#808080' }}>
+        <WhoToFollow />
+      </div>
     </div>
   );
 }

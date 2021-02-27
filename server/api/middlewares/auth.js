@@ -19,7 +19,7 @@ export function authFromCookie(request, response, next) {
         .json({ message: 'Unauthorized' });
     }
   } catch (error) {
-    console.error('❌', error);
+    console.error(`❌ ${error.message}`);
     response
       .status(401)
       .cookie('token', '', {

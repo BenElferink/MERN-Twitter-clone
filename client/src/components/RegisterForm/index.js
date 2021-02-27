@@ -1,16 +1,15 @@
 import { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../actions/userActions';
-import FileBase64 from 'react-file-base64';
 import axios from '../../api';
 import Loading from '../Loading';
 import Button from '../Button';
 import Input from '../Input';
+import PicSelector from '../PicSelector';
 import TwitterIcon from '../../icons/Twitter';
 import BackIcon from '../../icons/Back';
-import CameraIcon from '../../icons/Camera';
-import styles from './index.module.css';
 import WhoToFollow from '../WhoToFollow';
+import IconButton from '../IconButton';
 
 export default function RegisterForm({ closeModal }) {
   const [phase, setPhase] = useState(1);
@@ -53,30 +52,70 @@ export default function RegisterForm({ closeModal }) {
     }
   };
 
+  const navStyles = {
+      height: '50px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      position: 'relative',
+    },
+    svgStyles = {
+      width: '25px',
+      height: '25px',
+      fill: 'var(--twitterBlue)',
+    },
+    navBtnStyles = {
+      width: '60px',
+      lineHeight: '25px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+    },
+    skipStyles = {
+      whiteSpace: 'nowrap',
+      justifyContent: 'flex-end',
+      backgroundColor: 'transparent',
+      border: 'none',
+      color: 'var(--twitterBlue)',
+      fontSize: '1em',
+      fontWeight: '600',
+    },
+    titleStyles = {
+      margin: '10px 0 20px 0',
+      fontSize: '1.5em',
+      fontWeight: '100 !important',
+    };
+
   const None = () => <div style={{ width: '70px' }} />;
 
   return (
-    <form className={styles.main} onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       {/* form nav (phase controller) */}
-      <div className={styles.nav}>
+      <div style={navStyles}>
         {phase !== 1 && phase !== 4 ? (
-          <BackIcon className={styles.back} onClick={() => setPhase(phase - 1)} />
+          <IconButton>
+            <BackIcon style={svgStyles} onClick={() => setPhase(phase - 1)} />
+          </IconButton>
         ) : (
           <None />
         )}
-        <TwitterIcon />
+
+        <TwitterIcon style={{ ...svgStyles, position: 'absolute', left: 'calc(50% - 15px)' }} />
+
         {phase === 2 && !profilePic ? (
-          <button className={styles.skip} onClick={() => setPhase(phase + 1)}>
+          <button style={{ ...navBtnStyles, ...skipStyles }} onClick={() => setPhase(phase + 1)}>
             Skip for now
           </button>
         ) : phase === 3 ? (
           <None />
         ) : phase === 4 ? (
-          <button className={styles.skip} onClick={closeModal}>
+          <button style={{ ...navBtnStyles, ...skipStyles }} onClick={closeModal}>
             Skip for now
           </button>
         ) : (
           <Button
+            style={navBtnStyles}
             text='Next'
             design='filled'
             onClick={() => setPhase(phase + 1)}
@@ -86,21 +125,24 @@ export default function RegisterForm({ closeModal }) {
       </div>
 
       {/* phase title */}
-      {phase === 1 || phase === 3 ? (
-        <h2>Create your account</h2>
-      ) : phase === 2 ? (
-        <h2>Pick a profile picture</h2>
-      ) : phase === 4 ? (
-        <h2>Who to follow</h2>
+      <h2 style={titleStyles}>
+        {phase === 1
+          ? 'Create your account'
+          : phase === 2
+          ? 'Pick a profile picture'
+          : phase === 3
+          ? 'Verify your account details'
+          : phase === 4
+          ? 'Who to follow'
+          : ''}
+      </h2>
+
+      {phase === 2 || phase === 3 ? (
+        // react-file-base64
+        <PicSelector pic={profilePic} setPic={setProfilePic} />
       ) : null}
 
       {/* phase inputs */}
-      {phase === 2 || phase === 3 ? (
-        <div className={styles.picSelect}>
-          <FileBase64 multiple={false} onDone={(file) => setProfilePic(file)} />
-          {profilePic ? <img src={profilePic.base64} alt='' /> : <CameraIcon />}
-        </div>
-      ) : null}
       {phase === 1 || phase === 3 ? (
         <Input
           label='Name'
@@ -149,7 +191,7 @@ export default function RegisterForm({ closeModal }) {
       ) : null}
 
       {/* list of people on twitter */}
-      {phase === 4 && <WhoToFollow />}
+      {phase === 4 && <WhoToFollow height='470' />}
     </form>
   );
 }

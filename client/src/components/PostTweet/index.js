@@ -1,26 +1,19 @@
 import { useRef, useState } from 'react';
 import axios from '../../api';
 import Button from '../Button';
+import Loading from '../Loading';
 import ProfilePicture from '../ProfilePicture';
+import IconButton from '../IconButton';
 import ImageIcon from '../../icons/Image';
 import EmojiIcon from '../../icons/Emoji';
-import styles from './index.module.css';
-import Loading from '../Loading';
 
 export default function PostTweet({ addTweet }) {
   const [submitting, setSubmitting] = useState(false);
   const [tweetText, setTweetText] = useState('');
   const tweetTextRef = useRef();
 
-  const resizeTextarea = () => {
-    tweetTextRef.current.style.cssText = 'height:auto; padding:0';
-    // for box-sizing other than "content-box" use:
-    tweetTextRef.current.style.cssText = '-moz-box-sizing:content-box';
-    tweetTextRef.current.style.cssText = 'height:' + tweetTextRef.current.scrollHeight + 'px';
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setSubmitting(true);
     const formData = {
       message: tweetText,
@@ -39,34 +32,79 @@ export default function PostTweet({ addTweet }) {
     setSubmitting(false);
   };
 
-  return (
-    <div className={styles.box}>
-      <ProfilePicture isLoggedUser={true} />
+  const componentStyles = {
+      display: 'flex',
+      border: '0.5px solid #f5f5f5',
+    },
+    formStyles = {
+      flex: '1',
+      padding: '0 10px 10px 0',
+    },
+    textAreaStyles = {
+      width: '100%',
+      height: 'auto',
+      margin: '15px 0',
+      fontSize: '1.2em',
+      backgroundColor: 'transparent',
+      border: 'none',
+      resize: 'none',
+      overflow: 'hidden',
+      outline: 'none',
+    },
+    toolStyles = {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    svgStyles = {
+      width: '20px',
+      height: '20px',
+      fill: 'var(--twitterBlue)',
+    };
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+  return (
+    <div style={componentStyles}>
+      <ProfilePicture isLoggedUser={true} style={{ margin: '10px' }} />
+
+      <form style={formStyles} onSubmit={(e) => e.preventDefault()}>
         {/* char limit 280 */}
         <textarea
+          ref={tweetTextRef}
           placeholder="What's happening?"
           rows='1'
-          ref={tweetTextRef}
+          style={textAreaStyles}
           value={tweetText}
           onChange={(e) => {
             setTweetText(e.target.value);
-            resizeTextarea();
+            // The following auto-resizes the textarea to the number of rows typed
+            tweetTextRef.current.style.height = 'auto';
+            tweetTextRef.current.style.padding = '0';
+            tweetTextRef.current.style.height = `${tweetTextRef.current.scrollHeight}px`;
           }}
         />
 
-        <div className={styles.tools} onClick={() => null}>
-          <div className={styles.formOption}>
-            <ImageIcon />
-          </div>
-          <div className={styles.formOption} onClick={() => null}>
-            <EmojiIcon />
-          </div>
+        <div style={toolStyles}>
+          <IconButton onClick={() => null}>
+            <ImageIcon style={svgStyles} />
+          </IconButton>
+          <IconButton onClick={() => null}>
+            <EmojiIcon style={svgStyles} />
+          </IconButton>
+
           {submitting ? (
             <Loading size={30} />
           ) : (
-            <Button text='Tweet' design='filled' type='submit' disabled={!tweetText} />
+            <Button
+              text='Tweet'
+              design='filled'
+              onClick={handleSubmit}
+              disabled={!tweetText}
+              style={{
+                width: '70px',
+                margin: '0 0 0 auto',
+                lineHeight: '30px',
+              }}
+            />
           )}
         </div>
       </form>

@@ -3,7 +3,6 @@ import axios from '../../api';
 import Loading from '../Loading';
 import PostTweet from '../PostTweet';
 import Tweet from '../Tweet';
-import styles from './index.module.css';
 
 export default function Feed({ selectedNav }) {
   const [fetching, setFetching] = useState(false);
@@ -25,14 +24,23 @@ export default function Feed({ selectedNav }) {
     })();
   }, []);
 
-  return (
-    <div className={styles.component}>
-      <div className={styles.title}>{selectedNav}</div>
+  const componentStyles = {
+      flex: '1',
+      border: '0.5px solid #f5f5f5',
+    },
+    titleStyles = {
+      padding: '0.7em',
+      fontSize: '1.2em',
+      fontWeight: '900',
+    };
 
+  return (
+    <div style={componentStyles}>
+      <div style={titleStyles}>{selectedNav}</div>
       {/* post tweet */}
       <PostTweet addTweet={(tweet) => setTweets([tweet, ...tweets])} />
 
-      {/* view tweets */}
+      {/* tweets feed */}
       {fetching ? <Loading /> : tweets.map((item) => <Tweet key={item._id} tweet={item} />)}
     </div>
   );

@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
-import Loading from '../Loading';
-import axios from '../../api';
+import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../actions/userActions';
+import axios from '../../api';
+import Loading from '../Loading';
 
 export default function ProtectedRoute({ Private, Public, ...rest }) {
+  const [isRequesting, setIsRequesting] = useState(true);
   const { isLoggedIn } = useSelector((state) => state.user);
-
-  const [isRequesting, setIsRequesting] = useState(false);
   const dispatch = useDispatch();
 
+  // this side effect tries to fetch the user data,
+  // the server will validate the cookie and decide the fate of this route,
+  // if the validation passed, then the user will be stored in the global state, and the Private Component will render,
+  // if the validation failed, then the Public Component will be rendered
   useEffect(() => {
     (async () => {
-      setIsRequesting(true);
-      try {
-        const response = await axios.get('/auth');
-        console.log(`✅ ${response.status} ${response.statusText}`);
-        dispatch(login(response.data.user));
-        setIsRequesting(false);
-      } catch (error) {
-        console.error('❌', error);
-        setIsRequesting(false);
-      }
+      if (!isLoggedIn)
+        try {
+          const response = await axios.get('/auth');
+          dispatch(login(response.data.user));
+        } catch (error) {
+          console.error(error.message);
+        }
+
+      setIsRequesting(false);
     })();
     // eslint-disable-next-line
   }, []);
@@ -30,19 +32,6 @@ export default function ProtectedRoute({ Private, Public, ...rest }) {
   if (isRequesting) {
     return <Loading height='100vh' />;
   } else {
-    return (
-      <Route
-        {...rest}
-        // return a Route
-        // which conditionally renders on of the following
-        render={(props) => {
-          if (isLoggedIn) {
-            return <Private />;
-          } else {
-            return <Public />;
-          }
-        }}
-      />
-    );
+    return <Route {...rest} render={(props) => (isLoggedIn ? <Private /> : <Public />)} />;
   }
 }

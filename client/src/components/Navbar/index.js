@@ -10,7 +10,7 @@ import TwitterIcon from '../../icons/Twitter';
 import NewTweetIcon from '../../icons/NewTweet';
 import styles from './index.module.css';
 
-export default function Navbar({ navState }) {
+export default function Navbar({ navState, openTweetModal }) {
   const [view, setView] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -31,7 +31,9 @@ export default function Navbar({ navState }) {
         <NavItem title='Notifications' Icon={Bell} navState={navState} />
         <NavItem title='Messages' Icon={Mail} navState={navState} />
         <NavItem title='Profile' Icon={User} navState={navState} />
-        <Button design='filled'>{view >= 1200 ? 'Tweet' : <NewTweetIcon />}</Button>
+        <Button design='filled' onClick={openTweetModal}>
+          {view >= 1200 ? 'Tweet' : <NewTweetIcon />}
+        </Button>
       </nav>
 
       <UserChip />

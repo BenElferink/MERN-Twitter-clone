@@ -1,35 +1,23 @@
-import { useHistory } from 'react-router-dom';
-import styles from './index.module.css';
-import TwitterIcon from '../../icons/Twitter';
-import LoginForm from '../../components/LoginForm';
-import Button from '../../components/Button';
+import useMediaQuery from '../../hooks/useMediaQuery';
+import Banner from '../../components/Banner';
 import Footer from '../../components/Footer';
+import AuthSelection from '../../components/AuthSelection';
 
 export default function PublicPage({ clickRegister }) {
-  const history = useHistory();
+  const isDesktop = useMediaQuery('(min-width: 992px)'),
+    pageStyles = {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      flexDirection: isDesktop ? 'row-reverse' : 'column',
+      flexWrap: isDesktop ? 'wrap' : 'nowrap',
+      alignItems: 'center',
+    };
 
   return (
-    <div className={styles.page}>
-      {/* auth section */}
-      <div className={styles.auth}>
-        <LoginForm onPage='public' />
-        <div className={styles.welcome}>
-          <TwitterIcon />
-          <h1>Happening now</h1>
-          <h2>Join Twitter today.</h2>
-          <div className={styles.buttons}>
-            <Button text='Sign up' design='filled' onClick={clickRegister} />
-            <Button text='Log in' design='outlined' onClick={() => history.push('/login')} />
-          </div>
-        </div>
-      </div>
-
-      {/* banner section */}
-      <div className={styles.banner}>
-        <TwitterIcon />
-      </div>
-
-      {/* footer */}
+    <div style={pageStyles}>
+      <AuthSelection clickRegister={clickRegister} />
+      <Banner />
       <Footer />
     </div>
   );

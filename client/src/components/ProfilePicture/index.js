@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
+import { url } from '../../api';
 
-export default function ProfilePicture({ isLoggedUser, image, size }) {
+export default function ProfilePicture({ isLoggedUser, image, size, style }) {
   const { profilePicture } = useSelector((state) => state.user);
 
   const imgStyle = {
@@ -13,12 +14,12 @@ export default function ProfilePicture({ isLoggedUser, image, size }) {
   if (isLoggedUser) {
     return (
       <img
-        src={profilePicture || 'http://localhost:8080/images/user.jpg'}
+        src={profilePicture || `${url}/images/user.jpg`}
         alt='👤'
-        style={imgStyle}
+        style={{ ...imgStyle, ...style }}
       />
     );
   } else {
-    return <img src={image || 'http://localhost:8080/images/user.jpg'} alt='👤' style={imgStyle} />;
+    return <img src={image || `${url}/images/user.jpg`} alt='👤' style={imgStyle} />;
   }
 }

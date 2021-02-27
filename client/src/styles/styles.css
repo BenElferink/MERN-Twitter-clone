@@ -13,11 +13,11 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .App {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
 }
 
@@ -28,13 +28,6 @@ body {
 .App h5,
 .App h6 {
   font-family: Montserrat;
-  font-weight: 700;
-}
-.App h1 {
-  font-size: 3.5em;
-}
-.App h2 {
-  font-size: 2em;
 }
 
 /*

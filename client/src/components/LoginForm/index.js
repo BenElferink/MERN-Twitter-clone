@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../actions/userActions';
 import axios from '../../api';
 import Input from '../Input';
 import Button from '../Button';
 import Loading from '../Loading';
-import styles from './index.module.css';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 export default function LoginForm({ onPage, clickRegister }) {
   const [submitting, setSubmitting] = useState(false);
@@ -36,8 +36,27 @@ export default function LoginForm({ onPage, clickRegister }) {
     }
   };
 
+  const isDesktop = useMediaQuery('(min-width: 992px)'),
+    formStylesPublicPage = {
+      display: isDesktop ? 'flex' : 'none',
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      maxWidth: '650px',
+      width: '100%',
+    },
+    formStylesLoginPage = {
+      width: '100%',
+      height: '240px',
+      margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-evenly',
+    };
+
   return (
-    <form className={styles[onPage]} onSubmit={handleSubmit}>
+    <form
+      style={onPage === 'public' ? formStylesPublicPage : formStylesLoginPage}
+      onSubmit={handleSubmit}>
       {/* form inputs */}
       <Input
         label='Username'
@@ -58,15 +77,42 @@ export default function LoginForm({ onPage, clickRegister }) {
       {submitting ? (
         <Loading />
       ) : (
-        <Button text='Log in' design={onPage === 'public' ? 'outlined' : 'filled'} type='submit' />
+        <Button
+          type='submit'
+          text='Log in'
+          design={onPage === 'public' ? 'outlined' : 'filled'}
+          style={onPage === 'public' ? { width: '220px' } : {}}
+        />
       )}
 
       {/* register (conditional) */}
-      {onPage === 'login' && (
-        <button className={styles.register} onClick={clickRegister}>
-          Sign up for Twitter
-        </button>
-      )}
+      {onPage === 'login' && <RegisterButton clickRegister={clickRegister} />}
     </form>
+  );
+}
+
+function RegisterButton({ clickRegister }) {
+  const ref = useRef(null);
+
+  const btnStyles = {
+      width: '100%',
+      backgroundColor: 'transparent',
+      border: 'none',
+      color: 'var(--twitterBlue)',
+      fontSize: '0.9rem',
+      fontWeight: '500',
+    },
+    doHoverStyles = () => (ref.current.style.textDecoration = 'underline'),
+    undoHoverStyles = () => (ref.current.style.textDecoration = 'unset');
+
+  return (
+    <button
+      ref={ref}
+      style={btnStyles}
+      onMouseEnter={doHoverStyles}
+      onMouseLeave={undoHoverStyles}
+      onClick={clickRegister}>
+      Sign up for Twitter
+    </button>
   );
 }
