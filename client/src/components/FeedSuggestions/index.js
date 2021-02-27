@@ -7,12 +7,21 @@ export default function FeedSuggestions() {
       display: isDesktop ? 'flex' : 'none',
       flexDirection: 'column',
       width: '300px',
+    },
+    titleStyles = {
+      padding: '1em',
+      fontWeight: '100',
+      borderBottom: '1px solid #f5f5f5',
+    },
+    wrapperStyles = {
+      height: '100%',
+      overflow: 'scroll',
     };
 
   return (
     <div style={componentStyles}>
-      SEARCH
-      <div style={{ backgroundColor: '#808080' }}>
+      <h6 style={titleStyles}>Who's on Twitter?</h6>
+      <div style={wrapperStyles}>
         <WhoToFollow />
       </div>
     </div>
