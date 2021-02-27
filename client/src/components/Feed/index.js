@@ -44,7 +44,9 @@ export default function Feed({ selectedNav }) {
           <PostTweet addTweet={(tweet) => setTweets([tweet, ...tweets])} />
 
           {/* tweets feed */}
-          {fetching ? <Loading /> : tweets.map((item) => <Tweet key={item._id} tweet={item} />)}
+          <div style={{ overflow: 'scroll', height: 'calc(100vh - 160px)' }}>
+            {fetching ? <Loading /> : tweets.map((item) => <Tweet key={item._id} tweet={item} />)}
+          </div>
         </Fragment>
       ) : (
         <div style={{ textAlign: 'center', paddingTop: '50px' }}>

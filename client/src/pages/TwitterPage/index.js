@@ -12,6 +12,7 @@ export default function TwitterPage() {
   const isDesktop = useMediaQuery('(min-width: 992px)'),
     isLargeDesktop = useMediaQuery('(min-width: 1200px)'),
     pageStyles = {
+      maxHeight: '100vh',
       maxWidth: isLargeDesktop ? '1200px' : isDesktop ? '992px' : '650px',
       margin: '0 auto',
       display: 'flex',

@@ -104,13 +104,14 @@ export async function getFeedTweets(request, response, next) {
       path: 'from',
       select: 'name username profilePicture',
     });
-    // let newAllTweets = foundUser.following.map(
-    //   async (followerId) =>
-    //     await Tweet.find({ from: followerId }).populate({
-    //       path: 'from',
-    //       select: 'name username profilePicture',
-    //     }),
-    // );
+
+    for (let i = 0; i < foundUser.following.length; i++) {
+      const newTweets = await Tweet.find({ from: foundUser.following[i] }).populate({
+        path: 'from',
+        select: 'name username profilePicture',
+      });
+      allTweets = allTweets.concat(newTweets);
+    }
 
     // sort by timestamp
     allTweets = allTweets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -119,7 +120,6 @@ export async function getFeedTweets(request, response, next) {
     response.status(200).json({
       message: 'tweets fetched',
       tweets: allTweets,
-      // testTweets: newAllTweets,
     });
   } catch (error) {
     console.error('❌', error);

@@ -37,7 +37,7 @@ export default function WhoToFollow({ height }) {
       {loading ? (
         <Loading />
       ) : (
-        users.map((user) => user._id !== id && <PersonToFollow user={user} />)
+        users.map((user) => user._id !== id && <PersonToFollow key={user._id} user={user} />)
       )}
     </div>
   );
