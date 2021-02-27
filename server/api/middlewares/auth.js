@@ -9,7 +9,7 @@ export function authFromCookie(request, response, next) {
       request.user = verified.id;
       next();
     } else {
-      response
+      return response
         .status(401)
         .cookie('token', '', {
           httpOnly: true,
@@ -20,7 +20,7 @@ export function authFromCookie(request, response, next) {
     }
   } catch (error) {
     console.error(`❌ ${error.message}`);
-    response
+    return response
       .status(401)
       .cookie('token', '', {
         httpOnly: true,
@@ -28,5 +28,29 @@ export function authFromCookie(request, response, next) {
         expires: new Date(0),
       })
       .json({ message: 'Unauthorized' });
+  }
+}
+
+export function authFromHeaders(request, response, next) {
+  try {
+    const token = request.headers.authorization.split(' ')[1];
+
+    console.log(token);
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (verified) {
+      request.user = verified.id;
+      next();
+    } else {
+      return response.status(401).json({
+        message: 'Unauthorized',
+      });
+    }
+  } catch (error) {
+    console.error(`❌ ${error.message}`);
+    return response.status(401).json({
+      message: 'Unauthorized',
+    });
   }
 }

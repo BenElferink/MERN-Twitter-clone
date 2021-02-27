@@ -1,5 +1,6 @@
 const initialState = {
   isLoggedIn: false,
+  token: localStorage.getItem('token') || null,
   id: null,
   name: null,
   username: null,
@@ -11,10 +12,12 @@ const initialState = {
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN':
-      return { isLoggedIn: true, ...action.payload };
+      action.token && localStorage.setItem('token', action.token);
+      return { isLoggedIn: true, token: action.token, ...action.payload };
 
     case 'LOGOUT':
-      return initialState;
+      localStorage.removeItem('token');
+      return { ...initialState, token: null };
 
     default:
       return state;

@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from '../../api';
 import Loading from '../Loading';
 import PostTweet from '../PostTweet';
 import Tweet from '../Tweet';
 
 export default function Feed({ selectedNav }) {
+  const { token } = useSelector((state) => state.user);
   const [fetching, setFetching] = useState(false);
   const [tweets, setTweets] = useState([]);
 
@@ -12,7 +14,12 @@ export default function Feed({ selectedNav }) {
     (async () => {
       setFetching(true);
       try {
-        const response = await axios.get('/twitter/tweets');
+        const response = await axios.get('/twitter/tweets', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        });
         console.log(`✅ ${response.status} ${response.statusText}`);
         setTweets(response.data.tweets);
         setFetching(false);
@@ -21,6 +28,7 @@ export default function Feed({ selectedNav }) {
         setFetching(false);
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   const componentStyles = {

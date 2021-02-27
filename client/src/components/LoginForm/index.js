@@ -24,7 +24,7 @@ export default function LoginForm({ onPage, clickRegister }) {
     try {
       const response = await axios.post('/auth/login', formData);
       console.log(`✅ ${response.status} ${response.statusText}`);
-      dispatch(login(response.data.user));
+      dispatch(login({ user: response.data.user, token: response.data.token }));
     } catch (error) {
       console.error('❌', error);
       setSubmitting(false);

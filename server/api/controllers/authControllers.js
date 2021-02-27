@@ -59,13 +59,14 @@ export const createNewUser = async (request, response, next) => {
     // send cookie
     response
       .status(201)
-      .cookie('token', token, {
-        httpOnly: true,
-        sameSite: 'Strict',
-        expires: new Date(Date.now() + 3.6e6), // 1 hour
-      })
+      // .cookie('token', token, {
+      //   httpOnly: true,
+      //   sameSite: 'Strict',
+      //   expires: new Date(Date.now() + 3.6e6), // 1 hour
+      // })
       .json({
         message: 'account created',
+        token,
         user: {
           id: savedUser._id,
           name: savedUser.name,
@@ -104,13 +105,14 @@ export async function login(request, response, next) {
     // send cookie
     response
       .status(200)
-      .cookie('token', token, {
-        httpOnly: true,
-        sameSite: 'Strict',
-        expires: new Date(Date.now() + 3.6e6), // 1 hour
-      })
+      // .cookie('token', token, {
+      //   httpOnly: true,
+      //   sameSite: 'Strict',
+      //   expires: new Date(Date.now() + 3.6e6), // 1 hour
+      // })
       .json({
         message: 'logged in',
+        token,
         user: {
           id: foundUser._id,
           name: foundUser.name,
@@ -130,11 +132,11 @@ export async function logout(request, response, next) {
   try {
     response
       .status(200)
-      .cookie('token', '', {
-        httpOnly: true,
-        sameSite: 'Strict',
-        expires: new Date(0),
-      })
+      // .cookie('token', '', {
+      //   httpOnly: true,
+      //   sameSite: 'Strict',
+      //   expires: new Date(0),
+      // })
       .send();
   } catch (error) {
     console.error('❌', error);
@@ -147,8 +149,12 @@ export async function getOneUser(request, response, next) {
     // fetch user
     const foundUser = await User.findOne({ _id: request.user }).select('-passwordHash -email');
 
+    // generate token
+    const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
     response.status(200).json({
       message: 'user fetched',
+      token,
       user: {
         id: foundUser._id,
         name: foundUser.name,

@@ -1,5 +1,5 @@
 import express from 'express';
-import { authFromCookie } from '../middlewares/auth.js';
+import { authFromHeaders } from '../middlewares/auth.js';
 import {
   getAllUsers,
   toggleFollowingUser,
@@ -17,9 +17,9 @@ const router = express.Router();
   3rd param = request & response function (controller)
 */
 
-router.get('/users', authFromCookie, getAllUsers);
-router.post('/follow/:id', authFromCookie, toggleFollowingUser);
-router.post('/tweet', authFromCookie, postTweet);
-router.get('/tweets', authFromCookie, getFeedTweets);
+router.get('/users', authFromHeaders, getAllUsers);
+router.post('/follow/:id', authFromHeaders, toggleFollowingUser);
+router.post('/tweet', authFromHeaders, postTweet);
+router.get('/tweets', authFromHeaders, getFeedTweets);
 
 export default router;

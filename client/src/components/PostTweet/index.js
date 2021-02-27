@@ -6,8 +6,10 @@ import ProfilePicture from '../ProfilePicture';
 import IconButton from '../IconButton';
 import ImageIcon from '../../icons/Image';
 import EmojiIcon from '../../icons/Emoji';
+import { useSelector } from 'react-redux';
 
 export default function PostTweet({ addTweet }) {
+  const { token } = useSelector((state) => state.user);
   const [submitting, setSubmitting] = useState(false);
   const [tweetText, setTweetText] = useState('');
   const [pic, setPic] = useState(null);
@@ -22,7 +24,12 @@ export default function PostTweet({ addTweet }) {
     };
 
     try {
-      const response = await axios.post('/twitter/tweet', formData);
+      const response = await axios.post('/twitter/tweet', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
       console.log(`✅ ${response.status} ${response.statusText}`);
       console.log(response.data);
       addTweet(response.data.tweet);

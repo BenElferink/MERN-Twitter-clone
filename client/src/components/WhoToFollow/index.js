@@ -6,7 +6,7 @@ import Loading from '../Loading';
 import ProfilePicture from '../ProfilePicture';
 
 export default function WhoToFollow({ height }) {
-  const { id } = useSelector((state) => state.user);
+  const { id, token } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -14,7 +14,12 @@ export default function WhoToFollow({ height }) {
     (async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/twitter/users');
+        const response = await axios.get('/twitter/users', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        });
         console.log(`✅ ${response.status} ${response.statusText}`);
         setUsers(response.data.users);
         setLoading(false);
@@ -76,16 +81,21 @@ function PersonToFollow({ user }) {
 }
 
 function FollowButton({ user, setRequesting }) {
-  const { following } = useSelector((state) => state.user);
+  const { following, token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const ref = useRef(null);
 
   const handleFollowClicked = async (userId) => {
     try {
       setRequesting(userId);
-      const response = await axios.post('/twitter/follow/' + userId);
+      const response = await axios.post('/twitter/follow/' + userId, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
       console.log(`✅ ${response.status} ${response.statusText}`);
-      dispatch(login(response.data.user));
+      dispatch(login({ user: response.data.user, token }));
       setRequesting(false);
     } catch (error) {
       console.error('❌', error);

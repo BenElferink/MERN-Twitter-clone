@@ -7,7 +7,7 @@ import Loading from '../Loading';
 
 export default function ProtectedRoute({ Private, Public, ...rest }) {
   const [isRequesting, setIsRequesting] = useState(true);
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn, token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // this side effect tries to fetch the user data,
@@ -16,10 +16,15 @@ export default function ProtectedRoute({ Private, Public, ...rest }) {
   // if the validation failed, then the Public Component will be rendered
   useEffect(() => {
     (async () => {
-      if (!isLoggedIn)
+      if (token)
         try {
-          const response = await axios.get('/auth');
-          dispatch(login(response.data.user));
+          const response = await axios.get('/auth', {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + token,
+            },
+          });
+          dispatch(login({ user: response.data.user, token: response.data.token }));
         } catch (error) {
           console.error(error.message);
         }

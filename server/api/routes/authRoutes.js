@@ -1,5 +1,5 @@
 import express from 'express';
-import { authFromCookie } from '../middlewares/auth.js';
+import { authFromHeaders } from '../middlewares/auth.js';
 import { createNewUser, login, logout, getOneUser } from '../controllers/authControllers.js'; // import request & response function
 
 // initialize router
@@ -15,6 +15,6 @@ const router = express.Router();
 router.post('/register', createNewUser);
 router.post('/login', login);
 router.get('/logout', logout);
-router.get('/', authFromCookie, getOneUser);
+router.get('/', authFromHeaders, getOneUser);
 
 export default router;
