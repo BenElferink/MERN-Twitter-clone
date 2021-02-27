@@ -9,7 +9,7 @@ import twitterRoutes from './api/routes/twitterRoutes.js';
 
 // initialize app
 const app = express();
-const origin = ['http://localhost:3000']; // allow source of requests (* --> everywhere)
+const origin = ['https://twitter-clone-web.herokuapp.com']; // allow source of requests (* --> everywhere)
 
 // middlewares
 dotenv.config();
