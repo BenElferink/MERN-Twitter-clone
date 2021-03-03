@@ -14,15 +14,14 @@ export default function FeedSuggestions() {
       borderBottom: '1px solid #f5f5f5',
     },
     wrapperStyles = {
-      height: '100%',
-      overflow: 'scroll',
+      height: 'calc(100vh - 50px)',
     };
 
   return (
     <div style={componentStyles}>
       <h6 style={titleStyles}>Who's on Twitter?</h6>
-      <div style={wrapperStyles}>
-        <WhoToFollow />
+      <div style={wrapperStyles} className='scroll'>
+        <WhoToFollow height='100%' />
       </div>
     </div>
   );

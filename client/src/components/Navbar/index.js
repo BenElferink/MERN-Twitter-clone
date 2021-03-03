@@ -34,7 +34,13 @@ export default function Navbar({ navState, openTweetModal }) {
         <NavItem title='Messages' Icon={Mail} navState={navState} />
         <NavItem title='Profile' Icon={User} navState={navState} />
         <Button design='filled' onClick={openTweetModal}>
-          {view >= 1200 ? 'Tweet' : <NewTweetIcon />}
+          {view >= 1200 ? (
+            'Tweet'
+          ) : (
+            <NewTweetIcon
+              style={{ width: '30px', height: '30px', padding: '4px', fill: '#f5f5f5' }}
+            />
+          )}
         </Button>
       </nav>
 

@@ -5,7 +5,7 @@ export default function Button({ children, design, style, text, onClick, type, d
 
   const btnStyles = {
       width: 'calc(100% - 10px)',
-      lineHeight: '42px',
+      height: '42px',
       margin: '5px',
       display: 'grid',
       placeItems: 'center',

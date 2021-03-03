@@ -28,7 +28,7 @@ export default function LoginForm({ onPage, clickRegister }) {
     } catch (error) {
       console.error('❌', error);
       setSubmitting(false);
-      if (error.response.status === 400) {
+      if (error?.response?.status === 400) {
         alert(error.response.data.message);
       } else {
         alert('an unnexpected error occurred');
