@@ -5,4 +5,4 @@
 - **R** = [React.js](https://reactjs.org)
 - **N** = [Node.js](https://nodejs.org)
 
-<img src='./screenshot.png' width='700' />
+<img src='./screenshot.png' width='1000' />
